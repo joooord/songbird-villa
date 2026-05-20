@@ -699,7 +699,7 @@ function initScrollHeader() {
     const header = document.getElementById('global-nav');
     const heroBg = document.querySelector('.hero-parallax-bg');
     
-    window.addEventListener('scroll', () => {
+    const handleScroll = () => {
         // Sticky Header Compression
         if (header) {
             if (window.scrollY > 50) {
@@ -717,7 +717,12 @@ function initScrollHeader() {
         
         // Dynamic Active Navigation Link Highlights
         highlightActiveNavLink();
-    });
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    // Execute once at launch to synchronize scroll state on reload
+    handleScroll();
 }
 
 function highlightActiveNavLink() {
