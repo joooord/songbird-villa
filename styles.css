@@ -36,6 +36,20 @@
     --radius-lg: 18px;
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Architectural Pattern tokens */
+    --terrace-tile-bg: #faf6eb;
+    --terrace-tile-stroke: #efe4cb;
+    --pool-water-bg: #0288d1;
+    --pool-water-ripple: #e0f2fe;
+    --room-floor-bg: #faf7f2;
+    --room-floor-plank: #eadecd;
+    --bath-tile-bg: #f1f5f9;
+    --bath-tile-stroke: #e2e8f0;
+    --roof-bg: #efe8dc;
+    --roof-stroke: #b5a995;
+    --wood-deck-bg: #eedec5;
+    --wood-deck-plank: #d2bc99;
 }
 
 /* Dark Mode Tokens */
@@ -49,6 +63,20 @@
     --text-muted: #9ca3af;
     --accent-light: rgba(197, 160, 89, 0.15);
     --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+    /* Dark Mode Architectural Pattern tokens */
+    --terrace-tile-bg: #1a1710;
+    --terrace-tile-stroke: #363021;
+    --pool-water-bg: #073b5c;
+    --pool-water-ripple: #0ea5e9;
+    --room-floor-bg: #12100d;
+    --room-floor-plank: #2d261e;
+    --bath-tile-bg: #0f172a;
+    --bath-tile-stroke: #1e293b;
+    --roof-bg: #242018;
+    --roof-stroke: #4d4435;
+    --wood-deck-bg: #271f15;
+    --wood-deck-plank: #4b3b27;
 }
 
 /* Base Styles */
@@ -1451,3 +1479,92 @@ footer {
         text-align: center;
     }
 }
+
+/* ==========================================================================
+   Ultra-Premium Architectural Visualization Styles
+   ========================================================================== */
+
+/* Floor Slab Surfaces */
+.room-floor {
+    pointer-events: none;
+    transition: var(--transition-smooth);
+}
+
+.floor-wood {
+    fill: url(#wood-floor) !important;
+}
+
+.floor-tile {
+    fill: url(#bathroom-tiles) !important;
+}
+
+.floor-deck {
+    fill: url(#wood-deck) !important;
+}
+
+/* Solid structural walls with soft drop shadows */
+.wall {
+    fill: #1e293b !important;
+    stroke: #0f172a !important;
+    stroke-width: 3.5;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
+}
+
+[data-theme="dark"] .wall {
+    fill: #111827 !important;
+    stroke: #374151 !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+}
+
+/* Patterns & Texture Overrides */
+.terrace {
+    fill: url(#travertine-tiles) !important;
+    stroke: var(--terrace-tile-stroke);
+    stroke-width: 0.8;
+}
+
+.pool-bg {
+    fill: url(#pool-caustics) !important;
+    stroke: #0284c7;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 4px 12px rgba(2, 132, 199, 0.25));
+}
+
+.roof-hip {
+    fill: url(#roof-shingles) !important;
+    stroke: var(--roof-stroke) !important;
+    stroke-width: 1.5 !important;
+    fill-opacity: 0.95 !important;
+}
+
+/* Layered Drop Shadows on furniture and assets */
+.bed, .furniture, .sunlounger, .umbrella, .compass-rose, .blueprint-seal {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+[data-theme="dark"] .bed, 
+[data-theme="dark"] .furniture, 
+[data-theme="dark"] .sunlounger, 
+[data-theme="dark"] .umbrella {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+/* Interactive Lighting: Golden overhead radial downlights on hover */
+.room-group:hover .room-overlay {
+    fill: url(#golden-glow) !important;
+    fill-opacity: 0.24 !important;
+    stroke: var(--accent) !important;
+    stroke-width: 3.5px !important;
+    stroke-opacity: 1 !important;
+    filter: drop-shadow(0 0 12px rgba(197, 160, 89, 0.6)) !important;
+}
+
+.room-group.selected .room-overlay {
+    fill: url(#golden-glow) !important;
+    fill-opacity: 0.38 !important;
+    stroke: var(--accent) !important;
+    stroke-width: 4.5px !important;
+    stroke-opacity: 1 !important;
+    filter: drop-shadow(0 0 16px rgba(197, 160, 89, 0.85)) !important;
+}
+

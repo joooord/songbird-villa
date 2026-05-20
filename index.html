@@ -124,6 +124,94 @@
                     <div class="zoom-canvas" id="canvas-ground">
                         <svg viewBox="0 0 1000 680" id="svg-ground">
                             <rect width="1000" height="680" fill="none"/>
+                            <defs>
+                                <!-- Wood flooring pattern (Oak planks) -->
+                                <pattern id="wood-floor" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <rect width="40" height="40" fill="var(--room-floor-bg)"/>
+                                    <line x1="0" y1="10" x2="40" y2="10" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="20" x2="40" y2="20" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="30" x2="40" y2="30" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="40" x2="40" y2="40" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="10" y1="0" x2="10" y2="10" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="30" y1="10" x2="30" y2="20" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="20" y1="20" x2="20" y2="30" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="35" y1="30" x2="35" y2="40" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                </pattern>
+                                
+                                <!-- Bathroom tile pattern (Square porcelain tiles) -->
+                                <pattern id="bathroom-tiles" width="12" height="12" patternUnits="userSpaceOnUse">
+                                    <rect width="12" height="12" fill="var(--bath-tile-bg)"/>
+                                    <rect width="12" height="12" fill="none" stroke="var(--bath-tile-stroke)" stroke-width="0.4" opacity="0.4"/>
+                                </pattern>
+                                
+                                <!-- Travertine terrace pattern (Ashlar/Grid stone pavers) -->
+                                <pattern id="travertine-tiles" width="24" height="24" patternUnits="userSpaceOnUse">
+                                    <rect width="24" height="24" fill="var(--terrace-tile-bg)"/>
+                                    <rect width="24" height="24" fill="none" stroke="var(--terrace-tile-stroke)" stroke-width="0.5" opacity="0.75"/>
+                                </pattern>
+                                
+                                <!-- Wood Decking pattern -->
+                                <pattern id="wood-deck" width="8" height="40" patternUnits="userSpaceOnUse">
+                                    <rect width="8" height="40" fill="var(--wood-deck-bg)"/>
+                                    <line x1="8" y1="0" x2="8" y2="40" stroke="var(--wood-deck-plank)" stroke-width="0.4" opacity="0.5"/>
+                                </pattern>
+
+                                <!-- Shimmering pool water ripple pattern (caustics) -->
+                                <pattern id="pool-caustics" width="60" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="60" height="60" fill="var(--pool-water-bg)"/>
+                                    <path d="M 0,20 Q 15,10 30,20 T 60,20" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.5" opacity="0.45" stroke-linecap="round"/>
+                                    <path d="M 0,40 Q 15,30 30,40 T 60,40" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.0" opacity="0.3" stroke-linecap="round"/>
+                                    <path d="M 15,10 Q 30,0 45,10 T 75,10" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+                                    <path d="M -15,30 Q 0,20 15,30 T 45,30" fill="none" stroke="var(--pool-water-ripple)" stroke-width="0.8" opacity="0.25" stroke-linecap="round"/>
+                                    <path d="M 30,50 Q 45,40 60,50 T 90,50" fill="none" stroke="var(--pool-water-ripple)" stroke-width="0.7" opacity="0.2" stroke-linecap="round"/>
+                                </pattern>
+
+                                <!-- Roof shingle pattern (Terracotta/Timber shakes) -->
+                                <pattern id="roof-shingles" width="16" height="8" patternUnits="userSpaceOnUse">
+                                    <rect width="16" height="8" fill="var(--roof-bg)"/>
+                                    <rect width="16" height="8" fill="none" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="8" y1="4" x2="8" y2="8" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="0" y1="0" x2="0" y2="4" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="16" y1="0" x2="16" y2="4" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                </pattern>
+
+                                <!-- Overhead Downlighting radial glow -->
+                                <radialGradient id="golden-glow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#fed7aa" stop-opacity="1"/>
+                                    <stop offset="100%" stop-color="#c5a059" stop-opacity="0"/>
+                                </radialGradient>
+                                
+                                <!-- Reusable detailed Potted Plant Template -->
+                                <g id="potted-plant-detailed">
+                                    <circle cx="0" cy="0" r="7" fill="rgba(0,0,0,0.15)" filter="blur(1.5px)"/>
+                                    <circle cx="0" cy="0" r="5" fill="#e64a19" stroke="#bf360c" stroke-width="0.8"/>
+                                    <circle cx="0" cy="0" r="3.8" fill="#5d4037"/>
+                                    <path d="M 0,0 C 2,-4 5,-5 7,-3 C 5,-1 2,0 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 C -2,-4 -5,-5 -7,-3 C -5,-1 -2,0 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 C 4,2 5,5 3,7 C 1,5 0,2 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 C -4,2 -5,5 -3,7 C -1,5 0,2 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 C 4,-2 5,-5 3,-7 C 1,-5 0,-2 0,0" fill="#81c784"/>
+                                    <path d="M 0,0 C -4,-2 -5,-5 -3,-7 C -1,-5 0,-2 0,0" fill="#4caf50"/>
+                                </g>
+
+                                <!-- Reusable detailed Palm Tree Template -->
+                                <g id="palm-tree-detailed">
+                                    <circle cx="2" cy="3" r="16" fill="rgba(0,0,0,0.15)" filter="blur(2.5px)"/>
+                                    <circle cx="0" cy="0" r="4.5" fill="#8d6e63" stroke="#5d4037" stroke-width="0.8"/>
+                                    <circle cx="0" cy="0" r="2" fill="#3e2723"/>
+                                    <path d="M 0,0 Q 8,-18 20,-24 Q 10,-10 0,0" fill="#1b5e20"/>
+                                    <path d="M 0,0 Q 20,-8 30,-8 Q 14,-2 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 Q 18,12 24,24 Q 10,10 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 Q 0,20 -6,30 Q -5,12 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 Q -18,12 -26,18 Q -12,6 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 Q -22,-6 -30,-12 Q -14,-4 0,0" fill="#1b5e20"/>
+                                    <path d="M 0,0 Q -12,-18 -18,-26 Q -8,-10 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 Q 6,-22 10,-32 Q 4,-14 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 Q 6,-10 12,-14 Q 6,-6 0,0" fill="#81c784" opacity="0.8"/>
+                                    <path d="M 0,0 Q 12,-4 18,-4 Q 8,-1 0,0" fill="#a5d6a7" opacity="0.8"/>
+                                    <path d="M 0,0 Q -10,-8 -15,-12 Q -6,-4 0,0" fill="#81c784" opacity="0.8"/>
+                                </g>
+                            </defs>
                             
                             <!-- Premium Blueprint Stamp Seal -->
                             <g class="blueprint-seal" transform="translate(100, 75)">
@@ -185,12 +273,12 @@
                             <!-- Planters / Landscaping backing -->
                             <rect x="250" y="220" width="140" height="60" class="planter-box" />
                             <g class="garden-greenery">
-                                <circle cx="270" cy="250" r="10" class="greenery"/>
-                                <circle cx="300" cy="245" r="8" class="greenery"/>
-                                <circle cx="330" cy="252" r="9" class="greenery"/>
-                                <circle cx="360" cy="246" r="10" class="greenery"/>
-                                <circle cx="285" cy="255" r="6" class="greenery"/>
-                                <circle cx="345" cy="255" r="7" class="greenery"/>
+                                <use href="#palm-tree-detailed" x="270" y="245" />
+                                <use href="#potted-plant-detailed" x="300" y="250" />
+                                <use href="#palm-tree-detailed" x="330" y="240" />
+                                <use href="#potted-plant-detailed" x="360" y="252" />
+                                <use href="#potted-plant-detailed" x="285" y="255" />
+                                <use href="#potted-plant-detailed" x="345" y="255" />
                             </g>
                             
                             <!-- Staircases (Highly Detailed Vector Blueprint Draftings) -->
@@ -312,6 +400,7 @@
                             
                             <!-- Bedroom 4 (Top Left) -->
                             <g class="room-group" data-room="bedroom4" data-type="bedroom">
+                                <rect class="room-floor floor-wood" x="180" y="80" width="120" height="140" />
                                 <rect x="195" y="95" width="45" height="40" class="bed"/>
                                 <rect x="200" y="90" width="15" height="5" class="pillow"/>
                                 <rect x="220" y="90" width="15" height="5" class="pillow"/>
@@ -321,6 +410,7 @@
 
                             <!-- Bedroom 3 (Top Right of block) -->
                             <g class="room-group" data-room="bedroom3" data-type="bedroom">
+                                <rect class="room-floor floor-wood" x="360" y="80" width="120" height="140" />
                                 <rect x="420" y="95" width="45" height="40" class="bed"/>
                                 <rect x="425" y="90" width="15" height="5" class="pillow"/>
                                 <rect x="445" y="90" width="15" height="5" class="pillow"/>
@@ -330,6 +420,7 @@
 
                             <!-- Top W.C (Shared Wing) -->
                             <g class="room-group" data-room="topwc" data-type="bedroom">
+                                <rect class="room-floor floor-tile" x="300" y="80" width="60" height="70" />
                                 <circle cx="330" cy="115" r="6" class="sanitary"/>
                                 <text x="330" y="135" class="text-label">W.C.</text>
                                 <rect x="300" y="80" width="60" height="70" class="room-overlay"/>
@@ -337,6 +428,7 @@
 
                             <!-- Top Shower (Shared Wing) -->
                             <g class="room-group" data-room="topshower" data-type="bedroom">
+                                <rect class="room-floor floor-tile" x="300" y="150" width="60" height="70" />
                                 <rect x="315" y="175" width="30" height="30" fill="none" stroke="#94a3b8"/>
                                 <circle cx="330" cy="190" r="3" class="sanitary"/>
                                 <text x="330" y="210" class="text-label">SHOWER</text>
@@ -345,6 +437,7 @@
 
                             <!-- Screened Porch -->
                             <g class="room-group" data-room="porch" data-type="social">
+                                <rect class="room-floor floor-deck" x="480" y="120" width="120" height="160" />
                                 <rect x="495" y="140" width="40" height="40" class="furniture" rx="4"/>
                                 <circle cx="515" cy="160" r="10" class="furniture"/>
                                 <text x="540" y="235" class="text-room">SCREENED PORCH</text>
@@ -353,6 +446,7 @@
 
                             <!-- Living Room -->
                             <g class="room-group" data-room="living" data-type="social">
+                                <rect class="room-floor floor-wood" x="600" y="120" width="160" height="160" />
                                 <!-- Modular sofa -->
                                 <rect x="630" y="140" width="110" height="35" class="furniture" rx="2"/>
                                 <circle cx="685" cy="210" r="18" class="furniture"/>
@@ -362,6 +456,7 @@
 
                             <!-- Guest W.C (Next to Kitchen) -->
                             <g class="room-group" data-room="guestwcg" data-type="social">
+                                <rect class="room-floor floor-tile" x="760" y="120" width="60" height="60" />
                                 <circle cx="790" cy="140" r="5" class="sanitary"/>
                                 <text x="790" y="160" class="text-label">W.C.</text>
                                 <rect x="760" y="120" width="60" height="60" class="room-overlay"/>
@@ -369,6 +464,7 @@
 
                             <!-- Kitchen & Dining Room -->
                             <g class="room-group" data-room="kitchen" data-type="social">
+                                <rect class="room-floor floor-wood" x="760" y="180" width="180" height="140" />
                                 <!-- Island -->
                                 <rect x="830" y="180" width="70" height="35" class="furniture" rx="3"/>
                                 <!-- Sink on island -->
@@ -416,6 +512,7 @@
 
                             <!-- Bedroom 2 / Study (Bottom Right Block) -->
                             <g class="room-group" data-room="bedroom2" data-type="bedroom">
+                                <rect class="room-floor floor-wood" x="800" y="500" width="140" height="100" />
                                 <rect x="815" y="540" width="45" height="50" class="bed" transform="rotate(90 837.5 565)"/>
                                 <rect x="805" y="550" width="5" height="12" class="pillow"/>
                                 <rect x="805" y="568" width="5" height="12" class="pillow"/>
@@ -426,6 +523,7 @@
 
                             <!-- Bed 2 W.C -->
                             <g class="room-group" data-room="bed2wc" data-type="bedroom">
+                                <rect class="room-floor floor-tile" x="880" y="440" width="60" height="60" />
                                 <circle cx="910" cy="470" r="5" class="sanitary"/>
                                 <text x="910" y="490" class="text-label">W.C.</text>
                                 <rect x="880" y="440" width="60" height="60" class="room-overlay"/>
@@ -433,6 +531,7 @@
 
                             <!-- Bed 2 Store -->
                             <g class="room-group" data-room="bed2store" data-type="bedroom">
+                                <rect class="room-floor floor-tile" x="800" y="440" width="80" height="60" />
                                 <rect x="825" y="460" width="30" height="15" fill="none" stroke="#94a3b8"/>
                                 <text x="840" y="480" class="text-label">STORE</text>
                                 <rect x="800" y="440" width="80" height="60" class="room-overlay"/>
@@ -507,6 +606,14 @@
                                 <circle cx="850" cy="387" r="2.5" class="dining-plate" transform="rotate(144 850 400)" />
                                 <circle cx="850" cy="387" r="2.5" class="dining-plate" transform="rotate(216 850 400)" />
                                 <circle cx="850" cy="387" r="2.5" class="dining-plate" transform="rotate(288 850 400)" />
+                                
+                                <!-- Lush greenery on the deck for realistic premium feel -->
+                                <use href="#palm-tree-detailed" x="290" y="550" />
+                                <use href="#potted-plant-detailed" x="300" y="340" />
+                                <use href="#potted-plant-detailed" x="345" y="395" />
+                                <use href="#palm-tree-detailed" x="720" y="240" />
+                                <use href="#potted-plant-detailed" x="815" y="420" />
+                                <use href="#potted-plant-detailed" x="885" y="420" />
                             </g>
 
                             <!-- Text labels -->
@@ -524,6 +631,94 @@
                     <div class="zoom-canvas" id="canvas-lower">
                         <svg viewBox="0 0 1000 680" id="svg-lower">
                             <rect width="1000" height="680" fill="none"/>
+                            <defs>
+                                <!-- Wood flooring pattern (Oak planks) -->
+                                <pattern id="wood-floor" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <rect width="40" height="40" fill="var(--room-floor-bg)"/>
+                                    <line x1="0" y1="10" x2="40" y2="10" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="20" x2="40" y2="20" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="30" x2="40" y2="30" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="40" x2="40" y2="40" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="10" y1="0" x2="10" y2="10" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="30" y1="10" x2="30" y2="20" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="20" y1="20" x2="20" y2="30" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="35" y1="30" x2="35" y2="40" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                </pattern>
+                                
+                                <!-- Bathroom tile pattern (Square porcelain tiles) -->
+                                <pattern id="bathroom-tiles" width="12" height="12" patternUnits="userSpaceOnUse">
+                                    <rect width="12" height="12" fill="var(--bath-tile-bg)"/>
+                                    <rect width="12" height="12" fill="none" stroke="var(--bath-tile-stroke)" stroke-width="0.4" opacity="0.4"/>
+                                </pattern>
+                                
+                                <!-- Travertine terrace pattern (Ashlar/Grid stone pavers) -->
+                                <pattern id="travertine-tiles" width="24" height="24" patternUnits="userSpaceOnUse">
+                                    <rect width="24" height="24" fill="var(--terrace-tile-bg)"/>
+                                    <rect width="24" height="24" fill="none" stroke="var(--terrace-tile-stroke)" stroke-width="0.5" opacity="0.75"/>
+                                </pattern>
+                                
+                                <!-- Wood Decking pattern -->
+                                <pattern id="wood-deck" width="8" height="40" patternUnits="userSpaceOnUse">
+                                    <rect width="8" height="40" fill="var(--wood-deck-bg)"/>
+                                    <line x1="8" y1="0" x2="8" y2="40" stroke="var(--wood-deck-plank)" stroke-width="0.4" opacity="0.5"/>
+                                </pattern>
+
+                                <!-- Shimmering pool water ripple pattern (caustics) -->
+                                <pattern id="pool-caustics" width="60" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="60" height="60" fill="var(--pool-water-bg)"/>
+                                    <path d="M 0,20 Q 15,10 30,20 T 60,20" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.5" opacity="0.45" stroke-linecap="round"/>
+                                    <path d="M 0,40 Q 15,30 30,40 T 60,40" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.0" opacity="0.3" stroke-linecap="round"/>
+                                    <path d="M 15,10 Q 30,0 45,10 T 75,10" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+                                    <path d="M -15,30 Q 0,20 15,30 T 45,30" fill="none" stroke="var(--pool-water-ripple)" stroke-width="0.8" opacity="0.25" stroke-linecap="round"/>
+                                    <path d="M 30,50 Q 45,40 60,50 T 90,50" fill="none" stroke="var(--pool-water-ripple)" stroke-width="0.7" opacity="0.2" stroke-linecap="round"/>
+                                </pattern>
+
+                                <!-- Roof shingle pattern (Terracotta/Timber shakes) -->
+                                <pattern id="roof-shingles" width="16" height="8" patternUnits="userSpaceOnUse">
+                                    <rect width="16" height="8" fill="var(--roof-bg)"/>
+                                    <rect width="16" height="8" fill="none" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="8" y1="4" x2="8" y2="8" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="0" y1="0" x2="0" y2="4" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="16" y1="0" x2="16" y2="4" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                </pattern>
+
+                                <!-- Overhead Downlighting radial glow -->
+                                <radialGradient id="golden-glow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#fed7aa" stop-opacity="1"/>
+                                    <stop offset="100%" stop-color="#c5a059" stop-opacity="0"/>
+                                </radialGradient>
+                                
+                                <!-- Reusable detailed Potted Plant Template -->
+                                <g id="potted-plant-detailed">
+                                    <circle cx="0" cy="0" r="7" fill="rgba(0,0,0,0.15)" filter="blur(1.5px)"/>
+                                    <circle cx="0" cy="0" r="5" fill="#e64a19" stroke="#bf360c" stroke-width="0.8"/>
+                                    <circle cx="0" cy="0" r="3.8" fill="#5d4037"/>
+                                    <path d="M 0,0 C 2,-4 5,-5 7,-3 C 5,-1 2,0 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 C -2,-4 -5,-5 -7,-3 C -5,-1 -2,0 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 C 4,2 5,5 3,7 C 1,5 0,2 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 C -4,2 -5,5 -3,7 C -1,5 0,2 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 C 4,-2 5,-5 3,-7 C 1,-5 0,-2 0,0" fill="#81c784"/>
+                                    <path d="M 0,0 C -4,-2 -5,-5 -3,-7 C -1,-5 0,-2 0,0" fill="#4caf50"/>
+                                </g>
+
+                                <!-- Reusable detailed Palm Tree Template -->
+                                <g id="palm-tree-detailed">
+                                    <circle cx="2" cy="3" r="16" fill="rgba(0,0,0,0.15)" filter="blur(2.5px)"/>
+                                    <circle cx="0" cy="0" r="4.5" fill="#8d6e63" stroke="#5d4037" stroke-width="0.8"/>
+                                    <circle cx="0" cy="0" r="2" fill="#3e2723"/>
+                                    <path d="M 0,0 Q 8,-18 20,-24 Q 10,-10 0,0" fill="#1b5e20"/>
+                                    <path d="M 0,0 Q 20,-8 30,-8 Q 14,-2 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 Q 18,12 24,24 Q 10,10 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 Q 0,20 -6,30 Q -5,12 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 Q -18,12 -26,18 Q -12,6 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 Q -22,-6 -30,-12 Q -14,-4 0,0" fill="#1b5e20"/>
+                                    <path d="M 0,0 Q -12,-18 -18,-26 Q -8,-10 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 Q 6,-22 10,-32 Q 4,-14 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 Q 6,-10 12,-14 Q 6,-6 0,0" fill="#81c784" opacity="0.8"/>
+                                    <path d="M 0,0 Q 12,-4 18,-4 Q 8,-1 0,0" fill="#a5d6a7" opacity="0.8"/>
+                                    <path d="M 0,0 Q -10,-8 -15,-12 Q -6,-4 0,0" fill="#81c784" opacity="0.8"/>
+                                </g>
+                            </defs>
                             
                             <!-- Terrace porch layout backing -->
                             <path d="M 230,160 L 580,160 L 580,500 L 230,500 Z" class="terrace"/>
@@ -531,11 +726,11 @@
                             <!-- Planter at the bottom -->
                             <rect x="320" y="460" width="160" height="40" class="planter-box"/>
                             <g class="garden-greenery">
-                                <circle cx="340" cy="480" r="8" class="greenery"/>
-                                <circle cx="370" cy="475" r="10" class="greenery"/>
-                                <circle cx="400" cy="482" r="9" class="greenery"/>
-                                <circle cx="430" cy="478" r="8" class="greenery"/>
-                                <circle cx="460" cy="481" r="10" class="greenery"/>
+                                <use href="#potted-plant-detailed" x="340" y="480"/>
+                                <use href="#palm-tree-detailed" x="370" y="475"/>
+                                <use href="#potted-plant-detailed" x="400" y="482"/>
+                                <use href="#palm-tree-detailed" x="430" y="478"/>
+                                <use href="#potted-plant-detailed" x="460" y="481"/>
                             </g>
 
                             <!-- Outer and inner structural walls -->
@@ -572,6 +767,8 @@
                             
                             <!-- Guest Bedroom 5 (Left block) -->
                             <g class="room-group" data-room="bedroom5" data-type="bedroom">
+                                <rect class="room-floor floor-wood" x="230" y="160" width="120" height="220" />
+                                <rect class="room-floor floor-tile" x="230" y="260" width="55" height="120" />
                                 <!-- Bed and pillows -->
                                 <rect x="255" y="180" width="50" height="45" class="bed"/>
                                 <rect x="260" y="172" width="16" height="6" class="pillow"/>
@@ -614,6 +811,7 @@
 
                             <!-- W/D Closet (Center upper) -->
                             <g class="room-group" data-room="wdcloset" data-type="social">
+                                <rect class="room-floor floor-tile" x="350" y="160" width="60" height="80" />
                                 <!-- Washer (Left Side-by-side unit) -->
                                 <rect x="358" y="175" width="21" height="25" class="sanitary" rx="1" />
                                 <circle cx="368.5" cy="187.5" r="7" stroke="#cbd5e1" fill="none" stroke-width="0.8" />
@@ -637,6 +835,7 @@
 
                             <!-- Guest W.C (Center lower) -->
                             <g class="room-group" data-room="guestwc" data-type="bedroom">
+                                <rect class="room-floor floor-tile" x="350" y="240" width="60" height="140" />
                                 <circle cx="380" cy="300" r="5" class="sanitary"/>
                                 <text x="380" y="325" class="text-label">GUEST W.C.</text>
                                 <rect x="350" y="240" width="60" height="140" class="room-overlay"/>
@@ -644,6 +843,7 @@
 
                             <!-- Private Laundry & Mechanicals (Right Block) -->
                             <g class="room-group" data-room="staff" data-type="social">
+                                <rect class="room-floor floor-wood" x="410" y="160" width="170" height="220" />
                                 <text x="495" y="240" class="text-room">PRIVATE</text>
                                 <text x="495" y="270" class="text-private">LAUNDRY / MECHANICAL ROOM</text>
                                 <rect x="410" y="160" width="170" height="220" class="room-overlay"/>
@@ -651,6 +851,7 @@
 
                             <!-- Lower Porch (deck space) -->
                             <g class="room-group" data-room="lowerporch" data-type="terrace">
+                                <rect class="room-floor floor-deck" x="230" y="380" width="350" height="80" />
                                 <rect x="230" y="380" width="350" height="80" class="room-overlay"/>
                             </g>
 
@@ -744,6 +945,94 @@
                     <div class="zoom-canvas" id="canvas-second">
                         <svg viewBox="0 0 1000 680" id="svg-second">
                             <rect width="1000" height="680" fill="none"/>
+                            <defs>
+                                <!-- Wood flooring pattern (Oak planks) -->
+                                <pattern id="wood-floor" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <rect width="40" height="40" fill="var(--room-floor-bg)"/>
+                                    <line x1="0" y1="10" x2="40" y2="10" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="20" x2="40" y2="20" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="30" x2="40" y2="30" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="0" y1="40" x2="40" y2="40" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="10" y1="0" x2="10" y2="10" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="30" y1="10" x2="30" y2="20" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="20" y1="20" x2="20" y2="30" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                    <line x1="35" y1="30" x2="35" y2="40" stroke="var(--room-floor-plank)" stroke-width="0.3" opacity="0.3"/>
+                                </pattern>
+                                
+                                <!-- Bathroom tile pattern (Square porcelain tiles) -->
+                                <pattern id="bathroom-tiles" width="12" height="12" patternUnits="userSpaceOnUse">
+                                    <rect width="12" height="12" fill="var(--bath-tile-bg)"/>
+                                    <rect width="12" height="12" fill="none" stroke="var(--bath-tile-stroke)" stroke-width="0.4" opacity="0.4"/>
+                                </pattern>
+                                
+                                <!-- Travertine terrace pattern (Ashlar/Grid stone pavers) -->
+                                <pattern id="travertine-tiles" width="24" height="24" patternUnits="userSpaceOnUse">
+                                    <rect width="24" height="24" fill="var(--terrace-tile-bg)"/>
+                                    <rect width="24" height="24" fill="none" stroke="var(--terrace-tile-stroke)" stroke-width="0.5" opacity="0.75"/>
+                                </pattern>
+                                
+                                <!-- Wood Decking pattern -->
+                                <pattern id="wood-deck" width="8" height="40" patternUnits="userSpaceOnUse">
+                                    <rect width="8" height="40" fill="var(--wood-deck-bg)"/>
+                                    <line x1="8" y1="0" x2="8" y2="40" stroke="var(--wood-deck-plank)" stroke-width="0.4" opacity="0.5"/>
+                                </pattern>
+
+                                <!-- Shimmering pool water ripple pattern (caustics) -->
+                                <pattern id="pool-caustics" width="60" height="60" patternUnits="userSpaceOnUse">
+                                    <rect width="60" height="60" fill="var(--pool-water-bg)"/>
+                                    <path d="M 0,20 Q 15,10 30,20 T 60,20" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.5" opacity="0.45" stroke-linecap="round"/>
+                                    <path d="M 0,40 Q 15,30 30,40 T 60,40" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.0" opacity="0.3" stroke-linecap="round"/>
+                                    <path d="M 15,10 Q 30,0 45,10 T 75,10" fill="none" stroke="var(--pool-water-ripple)" stroke-width="1.2" opacity="0.35" stroke-linecap="round"/>
+                                    <path d="M -15,30 Q 0,20 15,30 T 45,30" fill="none" stroke="var(--pool-water-ripple)" stroke-width="0.8" opacity="0.25" stroke-linecap="round"/>
+                                    <path d="M 30,50 Q 45,40 60,50 T 90,50" fill="none" stroke="var(--pool-water-ripple)" stroke-width="0.7" opacity="0.2" stroke-linecap="round"/>
+                                </pattern>
+
+                                <!-- Roof shingle pattern (Terracotta/Timber shakes) -->
+                                <pattern id="roof-shingles" width="16" height="8" patternUnits="userSpaceOnUse">
+                                    <rect width="16" height="8" fill="var(--roof-bg)"/>
+                                    <rect width="16" height="8" fill="none" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="8" y1="4" x2="8" y2="8" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="0" y1="0" x2="0" y2="4" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                    <line x1="16" y1="0" x2="16" y2="4" stroke="var(--roof-stroke)" stroke-width="0.5" opacity="0.8"/>
+                                </pattern>
+
+                                <!-- Overhead Downlighting radial glow -->
+                                <radialGradient id="golden-glow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#fed7aa" stop-opacity="1"/>
+                                    <stop offset="100%" stop-color="#c5a059" stop-opacity="0"/>
+                                </radialGradient>
+                                
+                                <!-- Reusable detailed Potted Plant Template -->
+                                <g id="potted-plant-detailed">
+                                    <circle cx="0" cy="0" r="7" fill="rgba(0,0,0,0.15)" filter="blur(1.5px)"/>
+                                    <circle cx="0" cy="0" r="5" fill="#e64a19" stroke="#bf360c" stroke-width="0.8"/>
+                                    <circle cx="0" cy="0" r="3.8" fill="#5d4037"/>
+                                    <path d="M 0,0 C 2,-4 5,-5 7,-3 C 5,-1 2,0 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 C -2,-4 -5,-5 -7,-3 C -5,-1 -2,0 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 C 4,2 5,5 3,7 C 1,5 0,2 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 C -4,2 -5,5 -3,7 C -1,5 0,2 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 C 4,-2 5,-5 3,-7 C 1,-5 0,-2 0,0" fill="#81c784"/>
+                                    <path d="M 0,0 C -4,-2 -5,-5 -3,-7 C -1,-5 0,-2 0,0" fill="#4caf50"/>
+                                </g>
+
+                                <!-- Reusable detailed Palm Tree Template -->
+                                <g id="palm-tree-detailed">
+                                    <circle cx="2" cy="3" r="16" fill="rgba(0,0,0,0.15)" filter="blur(2.5px)"/>
+                                    <circle cx="0" cy="0" r="4.5" fill="#8d6e63" stroke="#5d4037" stroke-width="0.8"/>
+                                    <circle cx="0" cy="0" r="2" fill="#3e2723"/>
+                                    <path d="M 0,0 Q 8,-18 20,-24 Q 10,-10 0,0" fill="#1b5e20"/>
+                                    <path d="M 0,0 Q 20,-8 30,-8 Q 14,-2 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 Q 18,12 24,24 Q 10,10 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 Q 0,20 -6,30 Q -5,12 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 Q -18,12 -26,18 Q -12,6 0,0" fill="#2e7d32"/>
+                                    <path d="M 0,0 Q -22,-6 -30,-12 Q -14,-4 0,0" fill="#1b5e20"/>
+                                    <path d="M 0,0 Q -12,-18 -18,-26 Q -8,-10 0,0" fill="#388e3c"/>
+                                    <path d="M 0,0 Q 6,-22 10,-32 Q 4,-14 0,0" fill="#4caf50"/>
+                                    <path d="M 0,0 Q 6,-10 12,-14 Q 6,-6 0,0" fill="#81c784" opacity="0.8"/>
+                                    <path d="M 0,0 Q 12,-4 18,-4 Q 8,-1 0,0" fill="#a5d6a7" opacity="0.8"/>
+                                    <path d="M 0,0 Q -10,-8 -15,-12 Q -6,-4 0,0" fill="#81c784" opacity="0.8"/>
+                                </g>
+                            </defs>
 
                             <!-- Faded pool deck visible below (Depth effect) -->
                             <g opacity="0.15">
@@ -852,6 +1141,7 @@
 
                             <!-- Balcony Terrace -->
                             <g class="room-group" data-room="balcony" data-type="terrace">
+                                <rect class="room-floor floor-deck" x="800" y="600" width="140" height="30" />
                                 <rect x="800" y="600" width="140" height="30" class="terrace"/>
                                 <line x1="800" y1="630" x2="940" y2="630" stroke="#7f8c8d" stroke-width="2"/>
                                 <text x="870" y="620" class="text-label">BALCONY TERRACE</text>
@@ -860,6 +1150,7 @@
 
                             <!-- Master Suite Bedroom 1 -->
                             <g class="room-group" data-room="bedroom1" data-type="bedroom">
+                                <rect class="room-floor floor-wood" x="800" y="500" width="140" height="100" />
                                 <rect x="815" y="540" width="45" height="50" class="bed" transform="rotate(90 837.5 565)"/>
                                 <rect x="805" y="550" width="5" height="12" class="pillow"/>
                                 <rect x="805" y="568" width="5" height="12" class="pillow"/>
@@ -870,6 +1161,7 @@
 
                             <!-- Master Bath -->
                             <g class="room-group" data-room="masterbath" data-type="bedroom">
+                                <rect class="room-floor floor-tile" x="800" y="440" width="80" height="60" />
                                 <!-- Double Vanity along top wall -->
                                 <rect x="805" y="442" width="70" height="13" class="furniture" rx="1"/>
                                 <rect x="815" y="444.5" width="16" height="8" class="sanitary" rx="2"/>
@@ -894,6 +1186,7 @@
 
                             <!-- Master Wardrobe closet -->
                             <g class="room-group" data-room="masterwardrobe" data-type="bedroom">
+                                <rect class="room-floor floor-wood" x="880" y="440" width="60" height="60" />
                                 <!-- Organizer shelves along right wall -->
                                 <rect x="925" y="442" width="13" height="56" fill="none" stroke="#cbd5e1" stroke-width="0.8" />
                                 <line x1="925" y1="456" x2="938" y2="456" stroke="#e2e8f0" stroke-width="0.6" />
