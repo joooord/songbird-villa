@@ -340,6 +340,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initZoomPanSystem();
     initThemeManager();
     initTooltipTracker();
+    initScrollHeader();
+    initMobileNav();
+    initGalleryLightbox();
+    initBookingCalendar();
+    initReservationDrawer();
 });
 
 // 5. Theme Manager (Light/Dark Mode toggle)
@@ -684,3 +689,484 @@ function applyCanvasTransform(floorId, canvas) {
     const state = floorStates[floorId];
     canvas.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
 }
+
+// ==========================================================================
+// 2026 Luxury Marketing Website Custom Interactive Controllers
+// ==========================================================================
+
+// 11. Sticky Nav Scroll Compressor & Hero Parallax
+function initScrollHeader() {
+    const header = document.getElementById('global-nav');
+    const heroBg = document.querySelector('.hero-parallax-bg');
+    
+    window.addEventListener('scroll', () => {
+        // Sticky Header Compression
+        if (header) {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+        
+        // Hero Background Parallax Pan
+        if (heroBg) {
+            let scrollPos = window.scrollY;
+            heroBg.style.transform = `translateY(${scrollPos * 0.35}px)`;
+        }
+        
+        // Dynamic Active Navigation Link Highlights
+        highlightActiveNavLink();
+    });
+}
+
+function highlightActiveNavLink() {
+    const sections = document.querySelectorAll('.scroll-target, #hero-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let currentSectionId = 'hero-section';
+    let minDiff = Infinity;
+    
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        // Calculate which section is currently centered/prominent in viewport
+        const diff = Math.abs(rect.top - 120); 
+        if (rect.top < window.innerHeight * 0.4 && rect.bottom > 120 && diff < minDiff) {
+            minDiff = diff;
+            currentSectionId = section.id;
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (href === '#' + currentSectionId || (currentSectionId === 'hero-section' && href === '#hero-section')) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// 12. Mobile Menu Toggle Controller
+function initMobileNav() {
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+    
+    if (mobileToggle && mobileNav) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileNav.classList.toggle('active');
+            const isOpen = mobileNav.classList.contains('active');
+            
+            // Toggle body scroll lock
+            if (isOpen) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+            
+            // Swap icons between hamburger and close X
+            mobileToggle.innerHTML = isOpen ? `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            ` : `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            `;
+        });
+        
+        // Clicking mobile links closes menu
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+        
+        // Prevent background clicks from doing weird things
+        mobileNav.addEventListener('click', (e) => {
+            if (e.target === mobileNav) {
+                closeMobileMenu();
+            }
+        });
+    }
+}
+
+window.closeMobileMenu = function() {
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileToggle = document.getElementById('mobile-toggle');
+    if (mobileNav) {
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+        if (mobileToggle) {
+            mobileToggle.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            `;
+        }
+    }
+};
+
+// 13. Editorial Gallery & Glassmorphic Lightroom Lightbox
+let lightboxImages = [];
+let currentLightboxIndex = 0;
+
+function initGalleryLightbox() {
+    const items = document.querySelectorAll('.masonry-item');
+    
+    // Automatically harvest URLs and descriptions from HTML structure
+    lightboxImages = Array.from(items).map(item => {
+        const img = item.querySelector('img');
+        return {
+            src: img ? img.getAttribute('src') : '',
+            caption: img ? img.getAttribute('alt') : ''
+        };
+    });
+    
+    // Lightbox Arrow Key Listeners
+    document.addEventListener('keydown', (e) => {
+        const overlay = document.getElementById('lightbox-overlay');
+        if (!overlay || !overlay.classList.contains('active')) return;
+        
+        if (e.key === 'ArrowRight') {
+            navigateLightbox(1);
+        } else if (e.key === 'ArrowLeft') {
+            navigateLightbox(-1);
+        } else if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+}
+
+window.filterGallery = function(category) {
+    const filterChips = document.querySelectorAll('.gallery-filter-chip');
+    
+    // Deactivate previous chips
+    filterChips.forEach(chip => chip.classList.remove('active'));
+    
+    // Find active chip via click event source
+    const event = window.event;
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+    
+    const items = document.querySelectorAll('.masonry-item');
+    items.forEach(item => {
+        const itemCat = item.getAttribute('data-category');
+        if (category === 'all' || itemCat === category) {
+            item.style.display = 'block';
+            // Smooth micro-fade in transition
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0) scale(1)';
+            }, 10);
+        } else {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(10px) scale(0.96)';
+            setTimeout(() => {
+                item.style.display = 'none';
+            }, 300);
+        }
+    });
+};
+
+window.openLightbox = function(index) {
+    currentLightboxIndex = index;
+    const overlay = document.getElementById('lightbox-overlay');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const contentBox = document.querySelector('.lightbox-content-box');
+    
+    if (!overlay || !lightboxImg || !lightboxCaption) return;
+    
+    lightboxImg.src = lightboxImages[index].src;
+    lightboxCaption.textContent = lightboxImages[index].caption;
+    
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    if (contentBox) {
+        contentBox.classList.remove('loaded');
+        lightboxImg.onload = () => {
+            contentBox.classList.add('loaded');
+        };
+    }
+};
+
+window.closeLightbox = function() {
+    const overlay = document.getElementById('lightbox-overlay');
+    if (overlay) {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+};
+
+window.navigateLightbox = function(direction) {
+    let nextIndex = currentLightboxIndex + direction;
+    if (nextIndex >= lightboxImages.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = lightboxImages.length - 1;
+    
+    currentLightboxIndex = nextIndex;
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const contentBox = document.querySelector('.lightbox-content-box');
+    
+    if (!lightboxImg || !lightboxCaption) return;
+    
+    if (contentBox) {
+        contentBox.classList.remove('loaded');
+    }
+    
+    // Beautiful cross-fade timings
+    setTimeout(() => {
+        lightboxImg.src = lightboxImages[nextIndex].src;
+        lightboxCaption.textContent = lightboxImages[nextIndex].caption;
+        
+        lightboxImg.onload = () => {
+            if (contentBox) contentBox.classList.add('loaded');
+        };
+    }, 150);
+};
+
+// 14. Availability Grid Calendar Rendering (June 2026 Focus)
+let calendarCurrentDate = new Date(2026, 5, 1); // June 2026
+
+function initBookingCalendar() {
+    renderCalendarDays();
+}
+
+function renderCalendarDays() {
+    const daysGrid = document.getElementById('calendar-days-grid');
+    const monthYearTitle = document.getElementById('calendar-month-year');
+    
+    if (!daysGrid || !monthYearTitle) return;
+    
+    daysGrid.innerHTML = '';
+    
+    const year = calendarCurrentDate.getFullYear();
+    const month = calendarCurrentDate.getMonth();
+    
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December"
+    ];
+    
+    monthYearTitle.innerText = `${monthNames[month]} ${year}`;
+    
+    const firstDayIndex = new Date(year, month, 1).getDay(); // Sunday=0, Monday=1, etc.
+    const lastDayDate = new Date(year, month + 1, 0).getDate();
+    
+    // Draw leading empty cells
+    for (let i = 0; i < firstDayIndex; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.classList.add('calendar-day', 'empty');
+        daysGrid.appendChild(emptyCell);
+    }
+    
+    // Define exact booked dates array for luxury realism (June 2026 / July 2026)
+    let reservedDays = [];
+    if (year === 2026 && month === 5) { // June 2026
+        reservedDays = [4, 5, 6, 7, 14, 15, 16, 17, 24, 25, 26];
+    } else if (year === 2026 && month === 6) { // July 2026
+        reservedDays = [2, 3, 4, 10, 11, 12, 18, 19, 20, 25, 26, 27];
+    } else {
+        // Fallback: reserved slots on specific days matching weekend models
+        for (let d = 1; d <= lastDayDate; d++) {
+            const dayOfWeek = new Date(year, month, d).getDay();
+            if (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0) { // Fri, Sat, Sun
+                reservedDays.push(d);
+            }
+        }
+    }
+    
+    // Render the numerical day cells
+    for (let day = 1; day <= lastDayDate; day++) {
+        const dayCell = document.createElement('div');
+        dayCell.classList.add('calendar-day');
+        dayCell.innerText = day;
+        
+        const isReserved = reservedDays.includes(day);
+        if (isReserved) {
+            dayCell.classList.add('reserved');
+            dayCell.title = "This slot is booked";
+        } else {
+            dayCell.classList.add('available');
+            dayCell.title = "Select to inquire check-in";
+            
+            // Micro-interaction: clicking available day opens reservation and pre-fills check-in!
+            dayCell.addEventListener('click', () => {
+                const checkInDateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                openDrawerWithCheckIn(checkInDateString);
+            });
+        }
+        
+        daysGrid.appendChild(dayCell);
+    }
+}
+
+window.prevMonth = function() {
+    calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() - 1);
+    renderCalendarDays();
+};
+
+window.nextMonth = function() {
+    calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() + 1);
+    renderCalendarDays();
+};
+
+function openDrawerWithCheckIn(dateString) {
+    toggleDrawer(true);
+    const checkInInput = document.getElementById('book-checkin');
+    if (checkInInput) {
+        checkInInput.value = dateString;
+        
+        // Auto-focus check-out for seamless UX
+        const checkOutInput = document.getElementById('book-checkout');
+        if (checkOutInput) {
+            // Set minimum check-out to check-in date + 1 day
+            const checkInDate = new Date(dateString);
+            const nextDay = new Date(checkInDate);
+            nextDay.setDate(nextDay.getDate() + 1);
+            const checkOutMin = `${nextDay.getFullYear()}-${String(nextDay.getMonth() + 1).padStart(2, '0')}-${String(nextDay.getDate()).padStart(2, '0')}`;
+            
+            checkOutInput.min = checkOutMin;
+            checkOutInput.value = checkOutMin;
+            setTimeout(() => checkOutInput.focus(), 400);
+        }
+    }
+}
+
+// 15. Reservation Drawer and Headcount Stepper Controller
+let guestCounts = { adults: 2, children: 0, infants: 0 };
+
+function initReservationDrawer() {
+    // Synchronize stepper values with UI at launch
+    updateStepperUI('adults');
+    updateStepperUI('children');
+    updateStepperUI('infants');
+    
+    // Set minimum date picker inputs to today's date
+    const checkInInput = document.getElementById('book-checkin');
+    const checkOutInput = document.getElementById('book-checkout');
+    const today = new Date();
+    const dateFormatted = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    
+    if (checkInInput) {
+        checkInInput.min = dateFormatted;
+        checkInInput.addEventListener('change', () => {
+            if (checkOutInput) {
+                // Set minimum checkout limit based on selected checkin
+                const checkInDate = new Date(checkInInput.value);
+                const nextDay = new Date(checkInDate);
+                nextDay.setDate(nextDay.getDate() + 1);
+                const minCheckout = `${nextDay.getFullYear()}-${String(nextDay.getMonth() + 1).padStart(2, '0')}-${String(nextDay.getDate()).padStart(2, '0')}`;
+                
+                checkOutInput.min = minCheckout;
+                if (!checkOutInput.value || checkOutInput.value < minCheckout) {
+                    checkOutInput.value = minCheckout;
+                }
+            }
+        });
+    }
+    
+    if (checkOutInput) {
+        checkOutInput.min = dateFormatted;
+    }
+}
+
+window.toggleDrawer = function(show) {
+    const overlay = document.getElementById('drawer-overlay');
+    const drawer = document.getElementById('reservation-drawer');
+    const loader = document.getElementById('drawer-loader');
+    const successScreen = document.getElementById('drawer-success');
+    
+    if (!overlay || !drawer) return;
+    
+    if (show) {
+        // Reset loader/success states before opening
+        if (loader) loader.classList.remove('active');
+        if (successScreen) successScreen.classList.remove('active');
+        
+        overlay.classList.add('active');
+        drawer.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent main page scroll
+    } else {
+        overlay.classList.remove('active');
+        drawer.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+};
+
+window.adjustCount = function(type, amount) {
+    if (!guestCounts.hasOwnProperty(type)) return;
+    
+    let nextVal = guestCounts[type] + amount;
+    
+    // Impose strict bounds based on luxury requirements
+    if (type === 'adults') {
+        if (nextVal < 1) nextVal = 1;
+        if (nextVal > 10) nextVal = 10;
+    } else if (type === 'children') {
+        if (nextVal < 0) nextVal = 0;
+        if (nextVal > 10) nextVal = 10;
+    } else if (type === 'infants') {
+        if (nextVal < 0) nextVal = 0;
+        if (nextVal > 5) nextVal = 5;
+    }
+    
+    guestCounts[type] = nextVal;
+    updateStepperUI(type);
+};
+
+function updateStepperUI(type) {
+    const valSpan = document.getElementById(`count-${type}`);
+    if (valSpan) {
+        valSpan.innerText = guestCounts[type];
+    }
+}
+
+window.handleReservationSubmit = function(event) {
+    event.preventDefault();
+    
+    const form = document.getElementById('reservation-form');
+    const loader = document.getElementById('drawer-loader');
+    const successScreen = document.getElementById('drawer-success');
+    
+    const checkin = document.getElementById('book-checkin').value;
+    const checkout = document.getElementById('book-checkout').value;
+    const fullname = document.getElementById('book-fullname').value;
+    const email = document.getElementById('book-email').value;
+    const phone = document.getElementById('book-phone').value;
+    
+    // Core check date integrity
+    if (new Date(checkout) <= new Date(checkin)) {
+        alert("Check-Out date must be strictly after Check-In date.");
+        return;
+    }
+    
+    // Activating 1.5s visual premium loader
+    if (loader) {
+        loader.classList.add('active');
+    }
+    
+    setTimeout(() => {
+        // Clear inputs inside form
+        if (form) form.reset();
+        
+        // Reset steppers to initial values
+        guestCounts = { adults: 2, children: 0, infants: 0 };
+        updateStepperUI('adults');
+        updateStepperUI('children');
+        updateStepperUI('infants');
+        
+        // Swap loaders for Success screen
+        if (loader) loader.classList.remove('active');
+        if (successScreen) successScreen.classList.add('active');
+    }, 1500);
+};

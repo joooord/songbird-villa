@@ -15,51 +15,123 @@
 </head>
 <body data-theme="light">
 
-    <div class="app-container">
-        
-        <!-- Header / Navigation Dock -->
-        <nav class="top-nav" id="main-navigation">
+    <!-- Glassmorphic Global Header Navigation -->
+    <header class="global-navbar" id="global-nav">
+        <div class="nav-wrapper">
             <div class="brand">
-                <h2 id="brand-title">Songbird Villa</h2>
-                <span id="brand-location">Anguilla — Precise Interactive Floor Plans</span>
+                <div class="brand-logo-container">
+                    <span class="logo-script">Songbird</span>
+                    <span class="logo-sub">Villa</span>
+                </div>
             </div>
+            <nav class="nav-links" id="nav-menu">
+                <a href="#hero-section" class="nav-link active">Overview</a>
+                <a href="#story-section" class="nav-link">The Story</a>
+                <a href="#floor-plans-section" class="nav-link">Floor Plans</a>
+                <a href="#gallery-section" class="nav-link">Gallery</a>
+                <a href="#amenities-section" class="nav-link">Amenities</a>
+                <a href="#rates-section" class="nav-link">Availability</a>
+            </nav>
             <div class="nav-actions">
                 <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme Mode" title="Toggle Light/Dark Theme">
-                    <!-- Light Mode Icon (Sun) -->
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="4"></circle>
                         <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
                     </svg>
                 </button>
+                <button class="book-cta" onclick="toggleDrawer(true)">Book Now</button>
+                <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
             </div>
-        </nav>
+        </div>
+    </header>
 
-        <!-- Hero Section featuring Exterior Architectural Visual -->
-        <header class="hero-section" id="hero-header">
-            <div class="hero-image-container">
-                <img src="assets/villa_exterior.png" alt="Songbird Villa Exterior Rendering" class="hero-image" id="hero-img">
-                <div class="hero-image-overlay"></div>
-                <div class="hero-tag">Anguilla, BWI</div>
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-nav-menu" id="mobile-nav">
+        <nav class="mobile-links">
+            <a href="#hero-section" class="mobile-link" onclick="closeMobileMenu()">Overview</a>
+            <a href="#story-section" class="mobile-link" onclick="closeMobileMenu()">The Story</a>
+            <a href="#floor-plans-section" class="mobile-link" onclick="closeMobileMenu()">Floor Plans</a>
+            <a href="#gallery-section" class="mobile-link" onclick="closeMobileMenu()">Gallery</a>
+            <a href="#amenities-section" class="mobile-link" onclick="closeMobileMenu()">Amenities</a>
+            <a href="#rates-section" class="mobile-link" onclick="closeMobileMenu()">Availability</a>
+        </nav>
+    </div>
+
+    <!-- Immersive Parallax Hero Section -->
+    <section class="hero-viewport" id="hero-section">
+        <div class="hero-parallax-bg" style="background-image: url('assets/villa_exterior.png');"></div>
+        <div class="hero-radial-overlay"></div>
+        <div class="hero-viewport-content">
+            <span class="hero-eyebrow">Anguilla, British West Indies</span>
+            <h1 class="hero-title">Songbird Villa</h1>
+            <p class="hero-lead">An ultra-luxury coastal sanctuary overlooking the shimmering crystal-blue waters of Rendezvous Bay</p>
+            <div class="hero-specs-row">
+                <div class="hero-spec">
+                    <span class="spec-num">6,800</span>
+                    <span class="spec-lbl">Sq Ft Living</span>
+                </div>
+                <div class="hero-spec">
+                    <span class="spec-num">5</span>
+                    <span class="spec-lbl">Luxury Suites</span>
+                </div>
+                <div class="hero-spec">
+                    <span class="spec-num">5.5</span>
+                    <span class="spec-lbl">Stone Baths</span>
+                </div>
+                <div class="hero-spec">
+                    <span class="spec-num">100%</span>
+                    <span class="spec-lbl">Private Shore</span>
+                </div>
             </div>
-            <div class="hero-content">
-                <h1>Bespoke Oceanfront Living</h1>
-                <p>Designed with clinical architectural precision, Songbird Villa represents a masterclass in modern geometry. This interactive portal allows you to explore the exact blueprint layout of this multi-tier cliffside estate, mapped to scale from the official property files.</p>
-                <div class="quick-specs">
-                    <div class="spec-item">
-                        <span class="spec-value">6,800</span>
-                        <span class="spec-label">Total Sq Ft</span>
+            <a href="#story-section" class="hero-scroll-btn" aria-label="Scroll Down to The Story">
+                <span class="mouse-icon">
+                    <span class="mouse-wheel"></span>
+                </span>
+                <span class="scroll-txt">Discover the Sanctuary</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Asymmetrical Story & Overview Section -->
+    <section class="story-showcase scroll-target" id="story-section">
+        <div class="story-grid">
+            <div class="story-text-block">
+                <span class="section-tag">The Oasis</span>
+                <h2 class="section-title">Where Horizon and Home Dissolve</h2>
+                <div class="divider-gold"></div>
+                <p class="story-paragraph lead-p">Songbird Villa is a five-bedroom architectural masterpiece nestled along the rugged southern shores of Anguilla, framing direct vistas of Rendezvous Bay Beach and the majestic hills of St. Martin.</p>
+                <p class="story-paragraph">Combining contemporary glass-and-stone geometry with natural Caribbean timber finishes, this estate represents the pinnacle of beachfront seclusion. Every structural corridor, lounging deck, and en-suite pavilion is laid out to celebrate sun, breeze, and absolute quiet.</p>
+                <div class="quote-container">
+                    <span class="quote-mark">“</span>
+                    <p class="quote-text">A modern masterpiece carved into the Anguilla shoreline, designed to merge ocean vistas with bespoke living geometry.</p>
+                </div>
+            </div>
+            <div class="story-visual-block">
+                <div class="story-image-canvas">
+                    <div class="img-card main-card">
+                        <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjI0NGE4YWQ3YS5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjoxNDQwLCJmaXQiOiJjb3ZlciJ9fX0=" alt="Songbird Villa Pool Deck Vista">
                     </div>
-                    <div class="spec-item">
-                        <span class="spec-value">5</span>
-                        <span class="spec-label">Bedrooms</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-value">5.5</span>
-                        <span class="spec-label">Bathrooms</span>
+                    <div class="img-card offset-card">
+                        <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjI0NGFjYThiYy5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjoxNDQwLCJmaXQiOiJjb3ZlciJ9fX0=" alt="Songbird Villa Covered Lounge">
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
+    </section>
+
+    <!-- Architectural Floor Plans Section -->
+    <section class="floor-plans-showcase scroll-target" id="floor-plans-section">
+        <div class="section-header">
+            <span class="section-tag">Interactive Blueprint</span>
+            <h2>Architectural Layout</h2>
+            <p>Designed with surgical geometry. Click and toggle villa floors to inspect the exact spatial configurations, structural walls, custom teak beds, and en-suite stone slabs mapped directly from official construction records.</p>
+        </div>
 
         <!-- Sticky Controls Bar -->
         <section class="floor-controls-wrapper" id="controls-panel">
@@ -1273,19 +1345,389 @@
                 </div>
             </aside>
         </main>
+    </section>
 
-        <!-- Tooltip layer -->
-        <div class="smart-tooltip" id="map-tooltip">
-            Room Title
-            <span>Click to explore details</span>
+    <!-- Editorial Gallery Showcase Section -->
+    <section class="gallery-showcase scroll-target" id="gallery-section">
+        <div class="section-header">
+            <span class="section-tag">Visual Archives</span>
+            <h2>Editorial Showcase</h2>
+            <p>A window into life at Songbird. Filter through the masterfully composed visual archives representing sleep, lounging, and pool terraces.</p>
         </div>
 
-        <!-- Footer -->
-        <footer id="main-footer">
-            <p>&copy; 2026 SONGBIRD VILLA ANGUILLA. PORTFOLIO WORK BY ANTIGRAVITY LUXURY REAL ESTATE PLATFORMS.</p>
-        </footer>
+        <div class="gallery-filters">
+            <button class="gallery-filter-chip active" onclick="filterGallery('all')">All Frames</button>
+            <button class="gallery-filter-chip" onclick="filterGallery('sleep')">Somatic Sleep</button>
+            <button class="gallery-filter-chip" onclick="filterGallery('outdoors')">Outdoors & Pools</button>
+            <button class="gallery-filter-chip" onclick="filterGallery('social')">Social Spaces</button>
+        </div>
 
+        <div class="gallery-masonry" id="masonry-grid">
+            <div class="masonry-item" data-category="outdoors" onclick="openLightbox(0)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTNhYzM4ZS5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Teak Pool deck and sun loungers overlooking Rendezvous Bay">
+                <div class="item-overlay"><span>Outdoors &bull; Sunset Deck</span></div>
+            </div>
+            <div class="masonry-item" data-category="sleep" onclick="openLightbox(1)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTNlMWUwNC5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Master bedroom opening out to personal oceanfront balcony">
+                <div class="item-overlay"><span>Sleep &bull; Master Suite</span></div>
+            </div>
+            <div class="masonry-item" data-category="social" onclick="openLightbox(2)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTQxMWE1Yy5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Covered dining pavilion and modern solid wood table">
+                <div class="item-overlay"><span>Social &bull; Covered Dining</span></div>
+            </div>
+            <div class="masonry-item" data-category="outdoors" onclick="openLightbox(3)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTQ0MWMwYi5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Infinity pool glowing under warm evening lighting">
+                <div class="item-overlay"><span>Outdoors &bull; Infinity Pool</span></div>
+            </div>
+            <div class="masonry-item" data-category="sleep" onclick="openLightbox(4)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTk5YTBiMS5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Luxurious garden suite bedroom with sliding wood doors">
+                <div class="item-overlay"><span>Sleep &bull; Guest Pavilion</span></div>
+            </div>
+            <div class="masonry-item" data-category="social" onclick="openLightbox(5)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTRkMDVlMi5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Gourmet open-concept kitchen and custom teak cabinetry">
+                <div class="item-overlay"><span>Social &bull; Teak Kitchen</span></div>
+            </div>
+            <div class="masonry-item" data-category="sleep" onclick="openLightbox(6)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTUxOWI0My5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Freestanding contemporary white tub inside master bath suite">
+                <div class="item-overlay"><span>Sleep &bull; Master Bath</span></div>
+            </div>
+            <div class="masonry-item" data-category="outdoors" onclick="openLightbox(7)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTU1NTA5Zi5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Concentric stone hot tub overflowing into primary swimming pool">
+                <div class="item-overlay"><span>Outdoors &bull; Hot Tub & Steps</span></div>
+            </div>
+            <div class="masonry-item" data-category="social" onclick="openLightbox(8)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTVhMzkyOS5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Sunlit high-ceiling living pavilion with custom designer sofas">
+                <div class="item-overlay"><span>Social &bull; Living Pavilion</span></div>
+            </div>
+            <div class="masonry-item" data-category="outdoors" onclick="openLightbox(9)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTYwZTczYi5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Lush organically shaped palms framing sea views from terrace">
+                <div class="item-overlay"><span>Outdoors &bull; Palms & Pools</span></div>
+            </div>
+            <div class="masonry-item" data-category="sleep" onclick="openLightbox(10)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTZhOGJkMy5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Oceanview guest bedroom with private en-suite bathroom layout">
+                <div class="item-overlay"><span>Sleep &bull; Guest Wing 2</span></div>
+            </div>
+            <div class="masonry-item" data-category="outdoors" onclick="openLightbox(11)">
+                <img src="https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTZkMjM5MS5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==" alt="Panoramic sunset view from coastal cliff paths">
+                <div class="item-overlay"><span>Outdoors &bull; Sunset Cliffside</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightroom Lightbox Overlay -->
+    <div class="lightbox-overlay" id="lightbox-overlay">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Lightbox">&times;</button>
+        <button class="lightbox-nav prev" onclick="navigateLightbox(-1)" aria-label="Previous Image">&#10216;</button>
+        <div class="lightbox-content-box">
+            <img src="" id="lightbox-img" alt="Lightbox Image">
+            <p class="lightbox-caption" id="lightbox-caption">Image Description</p>
+        </div>
+        <button class="lightbox-nav next" onclick="navigateLightbox(1)" aria-label="Next Image">&#10217;</button>
     </div>
+
+    <!-- Luxury Amenities Showcase Section -->
+    <section class="amenities-showcase scroll-target" id="amenities-section">
+        <div class="section-header">
+            <span class="section-tag">Premium Inclusions</span>
+            <h2>Luxury Amenities</h2>
+            <p>Every aspect of Songbird Villa is curated to deliver an elevated Caribbean residential experience.</p>
+        </div>
+
+        <div class="amenities-grid">
+            <!-- Comfort & Wellness -->
+            <div class="amenity-card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </div>
+                <h3>Somatic Comfort</h3>
+                <p>Fully air-conditioned suites, premium linens, under-cabinet dynamic lighting, and natural travertine floorboards.</p>
+            </div>
+            <!-- Entertainment -->
+            <div class="amenity-card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 18a6 6 0 100-12 6 6 0 000 12z"/><path d="M12 14a2 2 0 100-4 2 2 0 000 4z"/><path d="M19 12h2M3 12h2"/></svg>
+                </div>
+                <h3>Sonos Sound System</h3>
+                <p>Integrated multi-zone Sonos high-fidelity audio system spanning both interior salons and external pool decks.</p>
+            </div>
+            <!-- Outdoors -->
+            <div class="amenity-card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 22h20L12 2zM12 9v4M12 17h.01"/></svg>
+                </div>
+                <h3>Infinity Edge Pool</h3>
+                <p>Overlooking the Caribbean Sea with adjacent concentric bubbling hot tub, sunken fire pit, and shaded umbrellas.</p>
+            </div>
+            <!-- Convenience -->
+            <div class="amenity-card">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <h3>Daily Housekeeping</h3>
+                <p>Discreet, professional housekeeping and dedicated concierge coordinates all local reservations and transports.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Availability & Rates Section -->
+    <section class="rates-calendar-showcase scroll-target" id="rates-section">
+        <div class="section-header">
+            <span class="section-tag">Availability & Rates</span>
+            <h2>Plan Your Sojourn</h2>
+            <p>Review standard seasonal rates and check current calendar openings. Booking requests are handled directly by our estate team.</p>
+        </div>
+
+        <div class="rates-calendar-grid">
+            <!-- Dynamic Calendar Container -->
+            <div class="calendar-container glass-panel">
+                <div class="calendar-header">
+                    <button class="cal-nav" onclick="prevMonth()">&#10216;</button>
+                    <h3 id="calendar-month-year">June 2026</h3>
+                    <button class="cal-nav" onclick="nextMonth()">&#10217;</button>
+                </div>
+                <div class="calendar-weekdays">
+                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                </div>
+                <div class="calendar-days-grid" id="calendar-days-grid">
+                    <!-- Dynamic client-side rendering -->
+                </div>
+                <div class="calendar-legend">
+                    <span class="legend-item"><span class="dot available"></span>Available</span>
+                    <span class="legend-item"><span class="dot reserved"></span>Reserved</span>
+                </div>
+            </div>
+
+            <!-- Rates Sheet -->
+            <div class="rates-container glass-panel">
+                <h3>Seasonal Rates Matrix</h3>
+                <div class="divider-gold"></div>
+                <div class="rates-list">
+                    <div class="rate-item">
+                        <div class="rate-details">
+                            <span class="season-title">Low Season</span>
+                            <span class="season-dates">May 1 &ndash; Nov 15</span>
+                        </div>
+                        <span class="rate-price">$3,200 <small>/ night</small></span>
+                    </div>
+                    <div class="rate-item">
+                        <div class="rate-details">
+                            <span class="season-title">Shoulder Season</span>
+                            <span class="season-dates">Nov 16 &ndash; Dec 15 &bull; Jan 6 &ndash; Apr 30</span>
+                        </div>
+                        <span class="rate-price">$4,500 <small>/ night</small></span>
+                    </div>
+                    <div class="rate-item">
+                        <div class="rate-details">
+                            <span class="season-title">Festive Season (Peak)</span>
+                            <span class="season-dates">Dec 16 &ndash; Jan 5</span>
+                        </div>
+                        <span class="rate-price">$6,800 <small>/ night</small></span>
+                    </div>
+                </div>
+                <div class="rates-disclaimer">
+                    <p>&bull; High Season rates require a 7-night minimum sojourn.</p>
+                    <p>&bull; Local Government Tax (10%) and Service Charge (10%) are added to final invoice.</p>
+                </div>
+                <button class="inquire-cta-btn" onclick="toggleDrawer(true)">Request Booking</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide-Over Reservation Drawer -->
+    <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
+    <div class="reservation-drawer" id="reservation-drawer">
+        <button class="drawer-close-btn" onclick="toggleDrawer(false)" aria-label="Close Reservation Drawer">&times;</button>
+        
+        <div class="drawer-header">
+            <span class="drawer-eyebrow">Bespoke Inquiry</span>
+            <h3>Reservation Request</h3>
+            <p>Submit your travel details and our concierge team will reach out directly within 24 hours.</p>
+        </div>
+
+        <form id="reservation-form" onsubmit="handleReservationSubmit(event)">
+            <!-- Step 1: Dates -->
+            <div class="form-section">
+                <label class="form-label">Sojourn Dates</label>
+                <div class="form-row-dates">
+                    <div class="input-group">
+                        <span class="input-sub">Check-In</span>
+                        <input type="date" id="book-checkin" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-sub">Check-Out</span>
+                        <input type="date" id="book-checkout" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Headcount Steppers -->
+            <div class="form-section">
+                <label class="form-label">Traveler Headcount</label>
+                <div class="steppers-column">
+                    <div class="stepper-row">
+                        <div class="stepper-label">
+                            <span class="stepper-title">Adults</span>
+                            <span class="stepper-sub">Ages 13 and up</span>
+                        </div>
+                        <div class="stepper-controls">
+                            <button type="button" class="step-btn" onclick="adjustCount('adults', -1)">-</button>
+                            <span class="step-val" id="count-adults">2</span>
+                            <button type="button" class="step-btn" onclick="adjustCount('adults', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stepper-row">
+                        <div class="stepper-label">
+                            <span class="stepper-title">Children</span>
+                            <span class="stepper-sub">Ages 2 - 12</span>
+                        </div>
+                        <div class="stepper-controls">
+                            <button type="button" class="step-btn" onclick="adjustCount('children', -1)">-</button>
+                            <span class="step-val" id="count-children">0</span>
+                            <button type="button" class="step-btn" onclick="adjustCount('children', 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="stepper-row">
+                        <div class="stepper-label">
+                            <span class="stepper-title">Infants</span>
+                            <span class="stepper-sub">Under Age 2</span>
+                        </div>
+                        <div class="stepper-controls">
+                            <button type="button" class="step-btn" onclick="adjustCount('infants', -1)">-</button>
+                            <span class="step-val" id="count-infants">0</span>
+                            <button type="button" class="step-btn" onclick="adjustCount('infants', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Add-on services -->
+            <div class="form-section">
+                <label class="form-label">Trip Interests &amp; Add-ons</label>
+                <div class="interests-grid">
+                    <label class="check-container">
+                        <input type="checkbox" id="add-chef">
+                        <span class="check-box"></span>
+                        <span class="check-txt">Michelin Chef</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="add-yacht">
+                        <span class="check-box"></span>
+                        <span class="check-txt">Yacht Charter</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="add-jet">
+                        <span class="check-box"></span>
+                        <span class="check-txt">Private Jet</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="add-staff">
+                        <span class="check-box"></span>
+                        <span class="check-txt">Private Butler</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 4: Contact details -->
+            <div class="form-section">
+                <label class="form-label">Personal Details</label>
+                <div class="input-group-underline">
+                    <input type="text" id="book-fullname" placeholder="Full Name" required>
+                </div>
+                <div class="input-group-underline">
+                    <input type="email" id="book-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group-underline">
+                    <input type="tel" id="book-phone" placeholder="Phone Number" required>
+                </div>
+                <div class="input-group-underline select-group">
+                    <select id="book-contact-pref">
+                        <option value="" disabled selected>Preferred Contact Method</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone / WhatsApp</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-booking-btn">Submit Request</button>
+        </form>
+
+        <!-- Loader overlay inside drawer -->
+        <div class="drawer-loader" id="drawer-loader">
+            <span class="spinner"></span>
+            <p>Securing details...</p>
+        </div>
+
+        <!-- Success screen inside drawer -->
+        <div class="drawer-success" id="drawer-success">
+            <div class="success-icon-box">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+            </div>
+            <h3>Inquiry Transmitted</h3>
+            <p>Your sojourn request has been secured. Our dedicated representative from <strong>Properties in Paradise</strong> will touch base within 24 hours to finalize your reservation.</p>
+            <button class="done-btn" onclick="toggleDrawer(false)">Return to Site</button>
+        </div>
+    </div>
+
+    <!-- Smart Tooltip Layer -->
+    <div class="smart-tooltip" id="map-tooltip">
+        Room Title
+        <span>Click to explore details</span>
+    </div>
+
+    <!-- High-Contrast Map Showcase -->
+    <section class="map-showcase scroll-target" id="location-section">
+        <div class="map-text-overlay glass-panel">
+            <span class="section-tag">Location</span>
+            <h2>West End, Anguilla</h2>
+            <p>Songbird Villa sits on the prestigious south-facing cliffs of Anguilla's West End, offering both complete windswept isolation and dynamic walking access (less than 5 minutes) down to the pristine white sands of Rendezvous Bay Beach.</p>
+            <p class="pip-rep-tag">Proudly represented by Properties in Paradise, BWI.</p>
+        </div>
+        <div class="map-embed-container">
+            <!-- A gorgeous dark/light modern map representation showing exactly the coordinates -->
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m13!1m4!1s0x8c0e6fc85e5108f9:0xc2208a0d0a7bc9ad!2zMTjCsDEwJzQ5LjIiTiA2M8KwMDYnMzYuMCJX!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDEwJzQ5LjIiTiA2M8KwMDYnMzYuMCJX!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Luxury Representative Footer -->
+    <footer class="luxury-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="logo-script">Songbird</span>
+                <span class="logo-sub">Villa</span>
+                <p>An ultra-luxury private enclave in the British West Indies. Designed for somatic peace and spatial perfection.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Navigation</h4>
+                <a href="#hero-section">Overview</a>
+                <a href="#story-section">The Story</a>
+                <a href="#floor-plans-section">Floor Plans</a>
+                <a href="#gallery-section">Gallery</a>
+                <a href="#amenities-section">Amenities</a>
+                <a href="#rates-section">Availability</a>
+            </div>
+            <div class="footer-rep">
+                <h4>Exclusively Represented By</h4>
+                <p class="pip-logo-txt">Properties in Paradise</p>
+                <p>The Galleria Building, West End, Anguilla, AI-2640</p>
+                <p>Phone: +1 (264) 235-2818 &bull; +1 (264) 497-1964</p>
+                <p>Email: <a href="mailto:info@propertiesinparadise.com">info@propertiesinparadise.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Songbird Villa, Anguilla. Proudly represented by Properties in Paradise. All rights reserved. Architectural floor plans are dynamic visualizations only.</p>
+        </div>
+    </footer>
 
     <!-- JavaScript Controllers -->
     <script src="app.js"></script>
