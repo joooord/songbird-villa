@@ -1,0 +1,1453 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Color Tokens - Luxury Navy and Warm Champagne Gold */
+    --primary: #0f172a;       /* Deep Slate Blue */
+    --primary-light: #1e293b;
+    --accent: #c5a059;        /* Warm Champagne Gold */
+    --accent-hover: #b48f47;
+    --accent-light: rgba(197, 160, 89, 0.1);
+    
+    /* Neutral Tokens */
+    --bg-base: #f8fafc;
+    --bg-surface: #ffffff;
+    --border: #e2e8f0;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --text-on-primary: #ffffff;
+    
+    /* Interactive States & Specials */
+    --pool-light: #81d4fa;
+    --pool-dark: #0288d1;
+    --pool-glow: rgba(79, 195, 247, 0.3);
+    
+    /* Layout Details */
+    --font-heading: 'Cormorant Garamond', serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-script: 'Pinyon Script', cursive;
+    
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Tokens */
+[data-theme="dark"] {
+    --primary: #f8fafc;
+    --primary-light: #f1f5f9;
+    --bg-base: #090d16;
+    --bg-surface: #111827;
+    --border: #1f2937;
+    --text-main: #f1f5f9;
+    --text-muted: #9ca3af;
+    --accent-light: rgba(197, 160, 89, 0.15);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-light);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* App Layout Structure */
+.app-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px 48px 24px;
+}
+
+/* Navigation / Theme Bar */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Calligraphic signature logo styling */
+.brand-logo-container {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.logo-script {
+    font-family: var(--font-script);
+    font-size: 2.8rem;
+    color: var(--primary);
+    line-height: 0.8;
+    letter-spacing: 1px;
+    position: relative;
+    user-select: none;
+}
+
+/* Tiny signature bird overlay */
+.logo-script::after {
+    content: "🕊️";
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    font-size: 0.95rem;
+    transform: rotate(-10deg);
+}
+
+.logo-sub {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background-color: var(--accent-light);
+}
+
+/* Hero Villa Header */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 32px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 40px;
+    border: 1px solid var(--border);
+}
+
+.hero-image-container {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 10s ease;
+}
+
+.hero-image-container:hover .hero-image {
+    transform: scale(1.08);
+}
+
+.hero-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0) 100%);
+}
+
+.hero-tag {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(197, 160, 89, 0.95);
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hero-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-content h1 {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    line-height: 1.1;
+    color: var(--primary);
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+.hero-content p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 24px;
+    font-weight: 300;
+}
+
+.quick-specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-value {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.spec-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Floor Controls (Sticky Container) */
+.floor-controls-wrapper {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    background: rgba(var(--bg-surface), 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+.floor-tabs {
+    display: flex;
+    gap: 8px;
+}
+
+.tab-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 10px 24px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+    background-color: var(--bg-base);
+}
+
+.tab-btn.active {
+    background-color: var(--primary);
+    color: var(--text-on-primary);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .tab-btn.active {
+    background-color: var(--accent);
+    color: #111827;
+    border-color: var(--accent);
+}
+
+/* Filter chips in bar */
+.filter-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.filter-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+}
+
+.filter-chip {
+    background: var(--bg-base);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.filter-chip.active {
+    background-color: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.filter-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+    transition: var(--transition-smooth);
+}
+
+.filter-chip.active .filter-dot {
+    background-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+}
+
+/* Workspace Layout Split */
+.viewer-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+}
+
+/* Map Frame and controls */
+.map-viewport {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.map-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.map-title-area h3 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.map-title-area span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Zoom Control overlay */
+.zoom-controls {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(var(--bg-surface), 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+.zoom-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+}
+
+.zoom-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background-color: var(--accent-light);
+}
+
+/* Pan Instructions Overlay */
+.pan-indicator {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: rgba(var(--bg-surface), 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* SVG Floor Plan Wrapper & Canvas */
+.floor-plan-wrapper {
+    position: relative;
+    width: 100%;
+    height: 640px;
+    background: #f8fafd;
+    overflow: hidden;
+    cursor: grab;
+    display: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    opacity: 0;
+    transform: scale(0.97);
+}
+
+.floor-plan-wrapper.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.floor-plan-wrapper:active {
+    cursor: grabbing;
+}
+
+/* Highly detailed architectural grid paper background styling */
+.zoom-canvas {
+    width: 100%;
+    height: 100%;
+    transform-origin: 0px 0px;
+    transition: transform 0.1s cubic-bezier(0.1, 0.8, 0.3, 1);
+    
+    background-size: 30px 30px;
+    background-image: 
+        linear-gradient(to right, rgba(197, 160, 89, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(197, 160, 89, 0.04) 1px, transparent 1px);
+}
+
+[data-theme="dark"] .floor-plan-wrapper {
+    background: #0d121f;
+}
+
+[data-theme="dark"] .zoom-canvas {
+    background-image: 
+        linear-gradient(to right, rgba(197, 160, 89, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(197, 160, 89, 0.06) 1px, transparent 1px);
+}
+
+/* SVG Styling */
+svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Custom Interactive SVG styling */
+.wall {
+    stroke: #1e293b;
+    stroke-width: 3.5;
+    fill: #f1f5f9;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .wall {
+    stroke: #475569;
+    fill: #1e293b;
+}
+
+.thin-wall {
+    stroke: #475569;
+    stroke-width: 1.8;
+    fill: none;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .thin-wall {
+    stroke: #64748b;
+}
+
+.glass {
+    stroke: #38bdf8;
+    stroke-width: 1.5;
+    fill: rgba(186, 230, 253, 0.3);
+    transition: var(--transition-smooth);
+}
+
+/* Door Swing Blueprint Elements */
+.door-arc {
+    stroke: var(--accent);
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 2 2;
+    opacity: 0.7;
+    transition: var(--transition-smooth);
+}
+
+.door-leaf {
+    stroke: #8d6e63;
+    stroke-width: 1.8;
+    fill: none;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .door-leaf {
+    stroke: #bcaaa4;
+}
+
+/* Stairs Flight Drawing */
+.stairs-flight {
+    fill: #f1ebd9;
+    stroke: #cfc29c;
+    stroke-width: 1;
+}
+
+[data-theme="dark"] .stairs-flight {
+    fill: #221d12;
+    stroke: #4d4122;
+}
+
+.stairs-tread {
+    stroke: #94a3b8;
+    stroke-width: 1;
+    fill: none;
+}
+
+[data-theme="dark"] .stairs-tread {
+    stroke: #475569;
+}
+
+.stairs-arrow {
+    stroke: var(--accent);
+    stroke-width: 1.2;
+    fill: none;
+    marker-end: url(#arrow);
+}
+
+/* Travertine Terraces */
+.terrace {
+    fill: #faf6eb;
+    stroke: #e7ddc4;
+    stroke-width: 1;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .terrace {
+    fill: #1a1710;
+    stroke: #363021;
+}
+
+.stepping-stone {
+    fill: #e2e8f0;
+    stroke: #cbd5e1;
+    stroke-width: 0.8;
+}
+
+[data-theme="dark"] .stepping-stone {
+    fill: #1e293b;
+    stroke: #334155;
+}
+
+/* Pool animations and enhancements */
+.pool-bg {
+    fill: #bae6fd;
+    stroke: #38bdf8;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.15));
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .pool-bg {
+    fill: #0c4a6e;
+    stroke: #0284c7;
+}
+
+.pool-deep {
+    fill: #7dd3fc;
+    animation: poolShimmer 8s ease-in-out infinite alternate;
+}
+
+[data-theme="dark"] .pool-deep {
+    fill: #0369a1;
+}
+
+@keyframes poolShimmer {
+    0% { opacity: 0.8; transform: translate(1px, 0.5px) scale(0.995); }
+    100% { opacity: 1; transform: translate(-1px, -0.5px) scale(1.005); }
+}
+
+/* Jacuzzi details */
+.jacuzzi-outer {
+    fill: #e2e8f0;
+    stroke: #cbd5e1;
+    stroke-width: 1.5;
+}
+
+[data-theme="dark"] .jacuzzi-outer {
+    fill: #1e293b;
+    stroke: #334155;
+}
+
+.jacuzzi-inner {
+    fill: #bae6fd;
+    stroke: #38bdf8;
+    stroke-width: 1.5;
+}
+
+[data-theme="dark"] .jacuzzi-inner {
+    fill: #0c4a6e;
+    stroke: #0284c7;
+}
+
+/* Greenery planter box */
+.planter-box {
+    fill: #eef2f6;
+    stroke: #cbd5e1;
+    stroke-width: 1;
+}
+
+[data-theme="dark"] .planter-box {
+    fill: #1e293b;
+    stroke: #334155;
+}
+
+/* Furniture & fixtures styles */
+.bed {
+    fill: #e0e7ff;
+    stroke: #4f46e5;
+    stroke-width: 1.2;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .bed {
+    fill: #1e1b4b;
+    stroke: #6366f1;
+}
+
+.pillow {
+    fill: #ffffff;
+    stroke: #94a3b8;
+    stroke-width: 1;
+}
+
+[data-theme="dark"] .pillow {
+    fill: #3f3f46;
+    stroke: #71717a;
+}
+
+.blanket {
+    fill: #c7d2fe;
+    stroke: #4f46e5;
+    stroke-width: 0.8;
+}
+
+[data-theme="dark"] .blanket {
+    fill: #312e81;
+    stroke: #6366f1;
+}
+
+.furniture {
+    fill: #f5f5f4;
+    stroke: #78716c;
+    stroke-width: 1.2;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .furniture {
+    fill: #292524;
+    stroke: #a8a29e;
+}
+
+.sanitary {
+    fill: #ffffff;
+    stroke: #94a3b8;
+    stroke-width: 1.2;
+}
+
+[data-theme="dark"] .sanitary {
+    fill: #27272a;
+    stroke: #52525b;
+}
+
+/* Swaying greenery animation */
+.greenery {
+    fill: #bbf7d0;
+    stroke: #22c55e;
+    stroke-width: 0.8px;
+    transform-origin: center;
+    animation: plantSway 5s ease-in-out infinite;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .greenery {
+    fill: #064e3b;
+    stroke: #10b981;
+}
+
+.greenery:nth-child(2n) { animation-delay: 1.5s; animation-duration: 6s; }
+.greenery:nth-child(3n) { animation-delay: 3s; animation-duration: 4s; }
+
+@keyframes plantSway {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(3deg) scale(1.02); }
+}
+
+.sunlounger {
+    fill: #ffffff;
+    stroke: #ea580c;
+    stroke-width: 1.2;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .sunlounger {
+    fill: #3f3f46;
+    stroke: #f97316;
+}
+
+.umbrella {
+    fill: #ffffff;
+    stroke: #64748b;
+    stroke-width: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+}
+
+[data-theme="dark"] .umbrella {
+    fill: #27272a;
+    stroke: #71717a;
+}
+
+/* SVG Text labels styling */
+.text-room {
+    font-size: 10px;
+    font-weight: 700;
+    fill: #0f172a;
+    font-family: var(--font-sans);
+    text-anchor: middle;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .text-room {
+    fill: #f8fafc;
+}
+
+.text-label {
+    font-size: 8px;
+    font-weight: 600;
+    fill: #64748b;
+    font-family: var(--font-sans);
+    text-anchor: middle;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .text-label {
+    fill: #9ca3af;
+}
+
+.text-private {
+    font-size: 10px;
+    font-weight: 700;
+    fill: #dc2626;
+    letter-spacing: 0.5px;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+/* Interactive Room Hotspots */
+.room-group {
+    cursor: pointer;
+    pointer-events: all;
+}
+
+/* Invisible overlay bounds for hover targeting */
+.room-overlay {
+    fill: var(--accent);
+    fill-opacity: 0;
+    stroke: var(--accent);
+    stroke-width: 0;
+    stroke-opacity: 0;
+    transition: fill-opacity 0.3s ease, stroke-width 0.3s ease, stroke-opacity 0.3s ease;
+}
+
+/* Room group hover state */
+.room-group:hover .room-overlay {
+    fill-opacity: 0.08;
+    stroke-width: 2.5;
+    stroke-opacity: 0.7;
+    filter: drop-shadow(0 0 6px rgba(197, 160, 89, 0.4));
+}
+
+.room-group.selected .room-overlay {
+    fill-opacity: 0.15;
+    stroke-width: 3px;
+    stroke-opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.6));
+}
+
+/* Filters dimming classes */
+.map-filtered .room-group {
+    opacity: 0.25;
+    transition: opacity 0.4s ease;
+}
+
+.map-filtered .room-group.filter-match {
+    opacity: 1;
+}
+
+.map-filtered .room-group.filter-match .room-overlay {
+    fill-opacity: 0.05;
+    stroke-width: 1.5;
+    stroke-opacity: 0.4;
+}
+
+/* Master Suite Roof structures */
+.roof-hip {
+    fill: #efe8dc;
+    stroke: #b5a995;
+    stroke-width: 1.5;
+    fill-opacity: 0.7;
+}
+
+[data-theme="dark"] .roof-hip {
+    fill: #242018;
+    stroke: #4d4435;
+    fill-opacity: 0.8;
+}
+
+.roof-ridgeline {
+    stroke: #8a7c66;
+    stroke-width: 1;
+    stroke-dasharray: 2 2;
+}
+
+[data-theme="dark"] .roof-ridgeline {
+    stroke: #5c5240;
+}
+
+/* Compass Rose Elements */
+.compass-ring {
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.8;
+}
+
+.compass-needle-n {
+    fill: var(--primary);
+    stroke: var(--primary);
+    stroke-width: 0.5;
+}
+
+.compass-needle-s {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1;
+}
+
+.compass-text {
+    font-size: 11px;
+    font-weight: 700;
+    fill: var(--text-main);
+    font-family: var(--font-sans);
+    text-anchor: middle;
+}
+
+/* Interactive Sidebar Details Drawer */
+.sidebar-panel {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-xl);
+    padding: 32px 24px;
+    position: sticky;
+    top: 100px;
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Default Empty / Intro State */
+.info-default {
+    text-align: center;
+    padding: 24px 0;
+}
+
+.info-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--accent-light);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.info-default h4 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.info-default p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Selected Room State */
+.info-selected {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeInDrawer 0.4s ease forwards;
+}
+
+@keyframes fadeInDrawer {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.room-badge {
+    align-self: flex-start;
+    background-color: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.room-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--primary);
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+.room-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.room-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+}
+
+.meta-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.meta-val {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.95rem;
+}
+
+.meta-lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.room-features h5 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: var(--accent);
+}
+
+.features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.features-list li {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.features-list li::before {
+    content: "✓";
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.cta-button {
+    background-color: var(--primary);
+    color: var(--text-on-primary);
+    border: none;
+    padding: 14px;
+    width: 100%;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.cta-button:hover {
+    background-color: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 4px 12px var(--accent-light);
+}
+
+[data-theme="dark"] .cta-button {
+    background-color: var(--accent);
+    color: #111827;
+}
+
+[data-theme="dark"] .cta-button:hover {
+    background-color: #ffffff;
+    color: #111827;
+}
+
+/* Floor map legend dock */
+.legend-dock {
+    margin-top: 24px;
+    padding: 16px 24px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Dynamic Cursor Floating Tooltip */
+.smart-tooltip {
+    position: fixed;
+    background: rgba(15, 23, 42, 0.95);
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transform: translate(-50%, -130%) scale(0.9);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.smart-tooltip.visible {
+    opacity: 1;
+    transform: translate(-50%, -130%) scale(1);
+}
+
+.smart-tooltip span {
+    color: var(--accent);
+    display: block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+/* Ultra-Premium Blueprint Enhancements styling */
+.fire-pit-outer {
+    fill: #faf6eb;
+    stroke: #e7ddc4;
+    stroke-width: 1.2;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .fire-pit-outer {
+    fill: #1a1710;
+    stroke: #363021;
+}
+
+.fire-pit-bench {
+    fill: #f1ebd9;
+    stroke: #cfc29c;
+    stroke-width: 1;
+}
+
+[data-theme="dark"] .fire-pit-bench {
+    fill: #221d12;
+    stroke: #4d4122;
+}
+
+.fire-pit-center {
+    fill: #1e293b;
+    stroke: #334155;
+    stroke-width: 1.5;
+}
+
+[data-theme="dark"] .fire-pit-center {
+    fill: #0f172a;
+    stroke: #1e293b;
+}
+
+.fire-pit-flame {
+    fill: #f97316;
+    stroke: #ea580c;
+    stroke-width: 0.8;
+    filter: drop-shadow(0 0 6px #f97316);
+    animation: firePulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes firePulse {
+    0% { transform: scale(0.9) rotate(-1deg); opacity: 0.8; }
+    100% { transform: scale(1.1) rotate(1deg); opacity: 1; }
+}
+
+/* Dining plate & table glass details */
+.dining-plate {
+    fill: #ffffff;
+    stroke: #cbd5e1;
+    stroke-width: 0.5px;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .dining-plate {
+    fill: #27272a;
+    stroke: #52525b;
+}
+
+.dining-napkin {
+    fill: #c5a059;
+    fill-opacity: 0.4;
+    stroke: #c5a059;
+    stroke-width: 0.4px;
+}
+
+.glass-stem {
+    fill: none;
+    stroke: #38bdf8;
+    stroke-width: 0.4px;
+}
+
+.glass-liquid {
+    fill: #f43f5e;
+    fill-opacity: 0.7;
+    stroke: #e11d48;
+    stroke-width: 0.3px;
+}
+
+.umbrella-spoke {
+    stroke: #cbd5e1;
+    stroke-width: 0.5px;
+    stroke-dasharray: 2 1;
+}
+
+[data-theme="dark"] .umbrella-spoke {
+    stroke: #52525b;
+}
+
+/* Freestanding Bathtub */
+.freestanding-tub {
+    fill: #ffffff;
+    stroke: #94a3b8;
+    stroke-width: 1.5px;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .freestanding-tub {
+    fill: #27272a;
+    stroke: #52525b;
+}
+
+.tub-rim {
+    fill: none;
+    stroke: #cbd5e1;
+    stroke-width: 0.8px;
+}
+
+[data-theme="dark"] .tub-rim {
+    stroke: #3f3f46;
+}
+
+.tub-drain-hole {
+    fill: #94a3b8;
+    stroke: #64748b;
+    stroke-width: 0.4px;
+}
+
+.vanity-faucet {
+    stroke: #c5a059;
+    stroke-width: 1px;
+    fill: none;
+}
+
+/* Shingle line for realistic tiled hip roofs */
+.shingle-line {
+    stroke: #b5a995;
+    stroke-width: 0.4px;
+    opacity: 0.35;
+    stroke-dasharray: 2 1;
+    transition: var(--transition-smooth);
+}
+
+[data-theme="dark"] .shingle-line {
+    stroke: #4d4435;
+    opacity: 0.45;
+}
+
+/* Compass Rose detail marks */
+.compass-tick {
+    stroke: #c5a059;
+    stroke-width: 0.6px;
+}
+
+.compass-center-node {
+    fill: #c5a059;
+    stroke: #cbd5e1;
+    stroke-width: 0.5px;
+}
+
+/* Calligraphic Stamp Seal */
+.blueprint-seal {
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.85;
+    transition: var(--transition-smooth);
+}
+
+.seal-ring {
+    fill: none;
+    stroke: #c5a059;
+    stroke-width: 1.2px;
+}
+
+.seal-ring-inner {
+    fill: none;
+    stroke: #c5a059;
+    stroke-dasharray: 2 2;
+    stroke-width: 0.6px;
+}
+
+.seal-title {
+    font-family: var(--font-heading);
+    font-size: 8px;
+    font-weight: 700;
+    fill: #1a2a3a;
+    letter-spacing: 2px;
+    text-anchor: middle;
+}
+
+[data-theme="dark"] .seal-title {
+    fill: #c5a059;
+}
+
+.seal-sub {
+    font-family: var(--font-sans);
+    font-size: 4px;
+    font-weight: 500;
+    fill: #64748b;
+    letter-spacing: 1px;
+    text-anchor: middle;
+}
+
+[data-theme="dark"] .seal-sub {
+    fill: #9ca3af;
+}
+
+.seal-logo-script {
+    font-family: var(--font-script);
+    font-size: 26px;
+    fill: #c5a059;
+    text-anchor: middle;
+}
+
+.seal-bird {
+    fill: none;
+    stroke: #c5a059;
+    stroke-width: 0.8px;
+}
+
+/* Elegant footer */
+footer {
+    text-align: center;
+    padding: 48px 0 0 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Premium Responsive Grid */
+@media (max-width: 1024px) {
+    .viewer-layout {
+        grid-template-columns: 1fr;
+    }
+    .sidebar-panel {
+        position: static;
+    }
+    .hero-section {
+        grid-template-columns: 1fr;
+    }
+    .hero-image-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        padding: 0 16px 32px 16px;
+    }
+    .floor-controls-wrapper {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+    .floor-tabs {
+        justify-content: center;
+    }
+    .filter-wrapper {
+        justify-content: center;
+    }
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    .quick-specs {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
