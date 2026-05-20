@@ -125,6 +125,61 @@
         </div>
     </section>
 
+    <!-- Experiential Itinerary Section -->
+    <section class="experience-timeline scroll-target" id="itinerary-section">
+        <div class="section-header">
+            <span class="section-tag">Somatic Narrative</span>
+            <h2>A Day at Songbird</h2>
+            <p>Experience the curated rhythm of absolute coastal luxury. Explore how a perfect 24-hour cycle of sun, ocean, and culinary craft unfolds at the estate.</p>
+        </div>
+
+        <div class="timeline-container">
+            <!-- Left Side: Interactive Vertical Timeline Nodes -->
+            <div class="timeline-navigation">
+                <div class="timeline-line"></div>
+                <div class="timeline-node active" onclick="setTimelinePoint(0)" data-time="08:00 AM">
+                    <span class="node-dot"></span>
+                    <span class="node-time">08:00 AM</span>
+                    <span class="node-title">Somatic Awakening</span>
+                </div>
+                <div class="timeline-node" onclick="setTimelinePoint(1)" data-time="11:00 AM">
+                    <span class="node-dot"></span>
+                    <span class="node-time">11:00 AM</span>
+                    <span class="node-title">Powdery Sands</span>
+                </div>
+                <div class="timeline-node" onclick="setTimelinePoint(2)" data-time="02:00 PM">
+                    <span class="node-dot"></span>
+                    <span class="node-time">02:00 PM</span>
+                    <span class="node-title">Pool Deck Sojourn</span>
+                </div>
+                <div class="timeline-node" onclick="setTimelinePoint(3)" data-time="05:00 PM">
+                    <span class="node-dot"></span>
+                    <span class="node-time">05:00 PM</span>
+                    <span class="node-title">Sunset Fire-Pit Rituals</span>
+                </div>
+                <div class="timeline-node" onclick="setTimelinePoint(4)" data-time="08:00 PM">
+                    <span class="node-dot"></span>
+                    <span class="node-time">08:00 PM</span>
+                    <span class="node-title">Epicurean Dining</span>
+                </div>
+            </div>
+
+            <!-- Right Side: Content Card -->
+            <div class="timeline-content-card glass-panel" id="timeline-card">
+                <div class="timeline-card-header">
+                    <span class="card-time-badge" id="timeline-card-time">08:00 AM</span>
+                    <h3 id="timeline-card-title">Somatic Awakening</h3>
+                </div>
+                <p id="timeline-card-desc" class="timeline-card-desc">Sunrise espresso on the Master Suite Balcony, watching the morning light catch the turquoise waves of Rendezvous Bay. The soft trade winds carry the fragrance of salt and wild frangipani.</p>
+                <div class="timeline-card-highlight-box">
+                    <span class="highlight-tag">Blueprint Sync</span>
+                    <span class="highlight-txt" id="timeline-card-sync">Auto-focusing: Upper Floor Balcony</span>
+                </div>
+                <div class="timeline-card-image" id="timeline-card-img" style="background-image: url('https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTNlMWUwNC5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==');"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Architectural Floor Plans Section -->
     <section class="floor-plans-showcase scroll-target" id="floor-plans-section">
         <div class="section-header">
@@ -1339,12 +1394,62 @@
                             <li>Floor-to-ceiling glass pocket doors</li>
                             <li>Direct private terrace access</li>
                         </ul>
-                    </div>
-
-                    <button class="cta-button" id="cta-contact">Inquire About Villa</button>
+                        <button class="cta-button" id="cta-contact">Inquire About Villa</button>
                 </div>
             </aside>
         </main>
+    </section>
+
+    <!-- The Villa Journal Testimonial Section -->
+    <section class="journal-showcase scroll-target" id="journal-section">
+        <div class="section-header">
+            <span class="section-tag">Villa Archives</span>
+            <h2>The Villa Journal</h2>
+            <p>Whispered memoirs from past occupants of Songbird. Authentic entries transcribed from our physical, leather-bound guestbook.</p>
+        </div>
+
+        <div class="journal-slider-container glass-panel">
+            <div class="journal-slides-wrapper" id="journal-slides">
+                <!-- Slide 1 -->
+                <div class="journal-slide active">
+                    <div class="journal-quote-mark">&#8220;</div>
+                    <p class="journal-quote">A spatial masterpiece. The vanishing pocket glass walls made our sunset gatherings feel entirely connected to the sea. The Properties in Paradise team anticipated every single detail from our runway greeting to the private speedboat charters.</p>
+                    <div class="journal-divider"></div>
+                    <div class="journal-author">The Thorne Family</div>
+                    <div class="journal-location">London, United Kingdom</div>
+                    <div class="journal-date">March 2026</div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="journal-slide">
+                    <div class="journal-quote-mark">&#8220;</div>
+                    <p class="journal-quote">Somatic peace at its absolute finest. Watching the sunset turn the hills of St. Martin into gold from the sunken fire-pit lounge became our nightly sacred ritual. The isolation of the cliffs combined with immediate beach access is unmatched.</p>
+                    <div class="journal-divider"></div>
+                    <div class="journal-author">Dr. Adrian Vance</div>
+                    <div class="journal-location">Zurich, Switzerland</div>
+                    <div class="journal-date">January 2026</div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="journal-slide">
+                    <div class="journal-quote-mark">&#8220;</div>
+                    <p class="journal-quote">We had planned to explore all of Anguilla, but once we stepped into the screened outdoor porch and saw the sunlit infinity pool, we couldn't bring ourselves to leave. The chef services were extraordinary. Truly a flawless estate.</p>
+                    <div class="journal-divider"></div>
+                    <div class="journal-author">The Sterling Party</div>
+                    <div class="journal-location">Los Angeles, California</div>
+                    <div class="journal-date">December 2025</div>
+                </div>
+            </div>
+
+            <!-- Carousel Controls -->
+            <div class="journal-controls">
+                <button type="button" class="journal-arrow" onclick="prevJournalSlide()" aria-label="Previous Review">&#10216;</button>
+                <div class="journal-dots" id="journal-dots">
+                    <span class="journal-dot active" onclick="setJournalSlide(0)"></span>
+                    <span class="journal-dot" onclick="setJournalSlide(1)"></span>
+                    <span class="journal-dot" onclick="setJournalSlide(2)"></span>
+                </div>
+                <button type="button" class="journal-arrow" onclick="nextJournalSlide()" aria-label="Next Review">&#10217;</button>
+            </div>
+        </div>
     </section>
 
     <!-- Editorial Gallery Showcase Section -->
@@ -1414,17 +1519,6 @@
         </div>
     </section>
 
-    <!-- Lightroom Lightbox Overlay -->
-    <div class="lightbox-overlay" id="lightbox-overlay">
-        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Lightbox">&times;</button>
-        <button class="lightbox-nav prev" onclick="navigateLightbox(-1)" aria-label="Previous Image">&#10216;</button>
-        <div class="lightbox-content-box">
-            <img src="" id="lightbox-img" alt="Lightbox Image">
-            <p class="lightbox-caption" id="lightbox-caption">Image Description</p>
-        </div>
-        <button class="lightbox-nav next" onclick="navigateLightbox(1)" aria-label="Next Image">&#10217;</button>
-    </div>
-
     <!-- Luxury Amenities Showcase Section -->
     <section class="amenities-showcase scroll-target" id="amenities-section">
         <div class="section-header">
@@ -1465,6 +1559,135 @@
                 </div>
                 <h3>Daily Housekeeping</h3>
                 <p>Discreet, professional housekeeping and dedicated concierge coordinates all local reservations and transports.</p>
+            </div>
+        </div>
+
+        <!-- Curated Experiential Packages -->
+        <div class="packages-header">
+            <span class="packages-tag">Tailored Inquiries</span>
+            <h3>Bespoke Experiential Packages</h3>
+            <p>Elevate your sojourn with one of our highly curated signature packages. Hand-tailored by our elite estate manager and private concierges.</p>
+        </div>
+
+        <div class="packages-grid">
+            <!-- Package 1 -->
+            <div class="package-card glass-panel">
+                <div class="package-badge">Epicurean</div>
+                <div class="package-content">
+                    <h4>The Epicurean Escape</h4>
+                    <p class="package-desc">Indulge in tailored gourmet dining. A Michelin-trained private chef will design custom menus for daily brunches and spectacular multi-course dinners served under the stars.</p>
+                    <div class="package-divider"></div>
+                    <ul class="package-features">
+                        <li>&bull; Dedicated Chef &amp; Kitchen staff</li>
+                        <li>&bull; Tailored daily menus &amp; shopping</li>
+                        <li>&bull; Wine &amp; Cocktail pairings</li>
+                    </ul>
+                    <div class="package-footer">
+                        <span class="package-price">From $1,200 <small>/ day</small></span>
+                        <button type="button" class="package-cta-btn" onclick="selectConciergePackage('Epicurean Escape')">Select</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 2 -->
+            <div class="package-card glass-panel">
+                <div class="package-badge">Exploration</div>
+                <div class="package-content">
+                    <h4>The Oceanic Charter</h4>
+                    <p class="package-desc">Explore the outer cays of Anguilla on our private 50-foot luxury catamaran. Includes standard snorkeling gear, open champagne bar, and gourmet beach picnics.</p>
+                    <div class="package-divider"></div>
+                    <ul class="package-features">
+                        <li>&bull; 8-Hour Private Yacht cruise</li>
+                        <li>&bull; Custom Sandy Island landing</li>
+                        <li>&bull; Captain &amp; Hostess included</li>
+                    </ul>
+                    <div class="package-footer">
+                        <span class="package-price">From $3,500 <small>/ charter</small></span>
+                        <button type="button" class="package-cta-btn" onclick="selectConciergePackage('Oceanic Charter')">Select</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 3 -->
+            <div class="package-card glass-panel">
+                <div class="package-badge">Sanctuary</div>
+                <div class="package-content">
+                    <h4>The Wellness Sanctuary</h4>
+                    <p class="package-desc">Restore your somatic alignment. Includes daily sunrise yoga instruction on the poolside travertine terrace, private hot-stone massage therapies, and relaxing sound baths.</p>
+                    <div class="package-divider"></div>
+                    <ul class="package-features">
+                        <li>&bull; Private Yoga &amp; Pilates instructor</li>
+                        <li>&bull; 2x 90-Min Hot-Stone massages</li>
+                        <li>&bull; Sound bath sound meditations</li>
+                    </ul>
+                    <div class="package-footer">
+                        <span class="package-price">From $1,500 <small>/ sojourn</small></span>
+                        <button type="button" class="package-cta-btn" onclick="selectConciergePackage('Wellness Sanctuary')">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Logistics & FAQ Accordion Section -->
+    <section class="faq-accordion-showcase scroll-target" id="faq-section">
+        <div class="section-header">
+            <span class="section-tag">Logistical Resolution</span>
+            <h2>Travel &amp; Estate Logistics</h2>
+            <p>Transparent answers to high-end travel concerns. Resolve airline, speedboat, beach path, and staffing logistics seamlessly.</p>
+        </div>
+
+        <div class="faq-grid">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item glass-panel">
+                <button type="button" class="faq-trigger" onclick="toggleFaq(0)">
+                    <span>How do we arrange travel to the estate? (AXA vs. SXM)</span>
+                    <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="faq-content">
+                    <p>For private aviation, Clayton J. Lloyd International Airport (AXA) in Anguilla has a 5,400-foot runway accommodating large luxury turboprops and mid-size private jets. For commercial flights, most guests fly directly into St. Maarten (SXM). Upon arrival at SXM, our private concierge will greet you, assist with luggage, and transfer you to a private speed-charter boat that brings you directly to Anguilla in 20 minutes. A private luxury SUV will be waiting at the dock to escort you directly to the villa.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="faq-item glass-panel">
+                <button type="button" class="faq-trigger" onclick="toggleFaq(1)">
+                    <span>How direct is the beach access and footpath?</span>
+                    <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="faq-content">
+                    <p>Songbird Villa sits on an elevated coastal cliff to capture sunset views and sea breezes. The estate features a beautifully manicured, private sandy footpath leading directly down the cliff face onto the pristine white sands of Rendezvous Bay Beach. The walk is extremely gentle and takes less than five minutes, allowing you to transition from the infinity pool deck to the beach without stepping on public roads.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="faq-item glass-panel">
+                <button type="button" class="faq-trigger" onclick="toggleFaq(2)">
+                    <span>What staff services are included in standard rentals?</span>
+                    <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="faq-content">
+                    <p>Standard rentals include daily housekeeping, laundry/laundress services, dedicated groundskeepers, and our professional Estate Manager who acts as your personal concierge. We handle daily maintenance, pool cleaning, beach towels setup, and local reservations. Luxury add-on services—such as a Michelin-trained private chef, personal 24/7 butler, wellness spa therapist, and private security—can be dynamically arranged by our team at the time of booking.</p>
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="faq-item glass-panel">
+                <button type="button" class="faq-trigger" onclick="toggleFaq(3)">
+                    <span>Is the estate fully private and visually isolated?</span>
+                    <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="faq-content">
+                    <p>Yes. Songbird Villa is built as a self-contained luxury compound, surrounded by high structural boundary walls and lush tropical landscaping (palms, bougainvillea, and wild frangipani). There are no adjacent properties with direct sightlines into the pool deck, hot tub, sunken fire-pit lounge, or master balconies, ensuring complete windswept isolation and absolute privacy for high-profile occupants.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1728,6 +1951,27 @@
             <p>&copy; 2026 Songbird Villa, Anguilla. Proudly represented by Properties in Paradise. All rights reserved. Architectural floor plans are dynamic visualizations only.</p>
         </div>
     </footer>
+
+    <!-- Glassmorphic Ambient Soundscape Dock -->
+    <div class="ambient-sound-dock" id="sound-dock">
+        <button type="button" class="sound-toggle-btn" id="sound-toggle" aria-label="Toggle Ocean Soundscape" title="Play Somatic Soundscape">
+            <!-- Mute icon (default) -->
+            <svg class="audio-icon audio-muted" id="audio-icon-muted" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+            <!-- Playing icon -->
+            <svg class="audio-icon audio-playing hidden" id="audio-icon-playing" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+        </button>
+        <div class="sound-info">
+            <span class="sound-title">Somatic Waves</span>
+            <span class="sound-status" id="sound-status">Soundscape Off</span>
+        </div>
+    </div>
 
     <!-- JavaScript Controllers -->
     <script src="app.js"></script>

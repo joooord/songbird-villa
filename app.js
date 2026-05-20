@@ -345,6 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initGalleryLightbox();
     initBookingCalendar();
     initReservationDrawer();
+    initAmbientSoundscape();
+    initJournalSlider();
 });
 
 // 5. Theme Manager (Light/Dark Mode toggle)
@@ -1174,4 +1176,402 @@ window.handleReservationSubmit = function(event) {
         if (loader) loader.classList.remove('active');
         if (successScreen) successScreen.classList.add('active');
     }, 1500);
+};
+
+// ==========================================================================
+// 16. Ambient Procedural Web Audio Soundscape
+// ==========================================================================
+let audioCtx = null;
+let isAudioPlaying = false;
+let waveSource = null;
+let waveGain = null;
+let lfo = null;
+let birdTimeout = null;
+let masterGain = null;
+
+function initAmbientSoundscape() {
+    const soundDock = document.getElementById('sound-dock');
+    const soundToggle = document.getElementById('sound-toggle');
+    const mutedIcon = document.getElementById('audio-icon-muted');
+    const playingIcon = document.getElementById('audio-icon-playing');
+    const soundStatus = document.getElementById('sound-status');
+    
+    if (!soundToggle) return;
+    
+    soundToggle.addEventListener('click', () => {
+        if (!audioCtx) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            audioCtx = new AudioContextClass();
+        }
+        
+        if (isAudioPlaying) {
+            fadeAudioOut(() => {
+                isAudioPlaying = false;
+                mutedIcon.classList.remove('hidden');
+                playingIcon.classList.add('hidden');
+                soundStatus.innerText = "Soundscape Off";
+                soundDock.classList.remove('active-playing');
+                clearTimeout(birdTimeout);
+            });
+        } else {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            
+            startAudioSynth();
+            isAudioPlaying = true;
+            mutedIcon.classList.add('hidden');
+            playingIcon.classList.remove('hidden');
+            soundStatus.innerText = "Somatic Waves Live";
+            soundDock.classList.add('active-playing');
+        }
+    });
+}
+
+function startAudioSynth() {
+    if (!audioCtx) return;
+    
+    if (!masterGain) {
+        masterGain = audioCtx.createGain();
+        masterGain.connect(audioCtx.destination);
+    }
+    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.35, audioCtx.currentTime + 1.5);
+    
+    const bufferSize = 4 * audioCtx.sampleRate;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+    }
+    
+    waveSource = audioCtx.createBufferSource();
+    waveSource.buffer = noiseBuffer;
+    waveSource.loop = true;
+    
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.Q.value = 1.0;
+    filter.frequency.value = 350;
+    
+    waveGain = audioCtx.createGain();
+    waveGain.gain.value = 0.2;
+    
+    lfo = audioCtx.createOscillator();
+    lfo.type = 'sine';
+    lfo.frequency.value = 0.08; // ~12.5 second cycles
+    
+    const lfoGainVol = audioCtx.createGain();
+    lfoGainVol.gain.value = 0.12;
+    
+    const lfoGainFilter = audioCtx.createGain();
+    lfoGainFilter.gain.value = 200;
+    
+    lfo.connect(lfoGainVol);
+    lfoGainVol.connect(waveGain.gain);
+    
+    lfo.connect(lfoGainFilter);
+    lfoGainFilter.connect(filter.frequency);
+    
+    waveSource.connect(filter);
+    filter.connect(waveGain);
+    waveGain.connect(masterGain);
+    
+    waveSource.start(0);
+    lfo.start(0);
+    
+    scheduleBirdCall();
+}
+
+function playChirp(time) {
+    if (!audioCtx || !masterGain) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(3200 + Math.random() * 400, time);
+    osc.frequency.exponentialRampToValueAtTime(4800 + Math.random() * 400, time + 0.07);
+    osc.frequency.exponentialRampToValueAtTime(3600, time + 0.14);
+    
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(0.015, time + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, time + 0.14);
+    
+    osc.connect(gain);
+    gain.connect(masterGain);
+    
+    osc.start(time);
+    osc.stop(time + 0.15);
+}
+
+function scheduleBirdCall() {
+    if (!isAudioPlaying || !audioCtx) return;
+    const now = audioCtx.currentTime;
+    const chirps = 3 + Math.floor(Math.random() * 3);
+    let startTime = now;
+    
+    for (let i = 0; i < chirps; i++) {
+        playChirp(startTime);
+        startTime += 0.15 + Math.random() * 0.08;
+    }
+    
+    const nextCallDelay = 8000 + Math.random() * 12000; // Chirps every 8-20s
+    birdTimeout = setTimeout(scheduleBirdCall, nextCallDelay);
+}
+
+function fadeAudioOut(callback) {
+    if (masterGain && audioCtx) {
+        const now = audioCtx.currentTime;
+        masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+        masterGain.gain.linearRampToValueAtTime(0, now + 1.0);
+        
+        setTimeout(() => {
+            if (waveSource) {
+                try { waveSource.stop(); } catch(e){}
+                waveSource.disconnect();
+                waveSource = null;
+            }
+            if (lfo) {
+                try { lfo.stop(); } catch(e){}
+                lfo.disconnect();
+                lfo = null;
+            }
+            if (callback) callback();
+        }, 1050);
+    } else {
+        if (callback) callback();
+    }
+}
+
+// ==========================================================================
+// 17. Sensory Itinerary Timeline & Floor Plan Sync Crossover
+// ==========================================================================
+window.setTimelinePoint = function(index) {
+    const nodes = document.querySelectorAll('.timeline-node');
+    nodes.forEach((node, idx) => {
+        if (idx === index) {
+            node.classList.add('active');
+        } else {
+            node.classList.remove('active');
+        }
+    });
+
+    const timelineData = [
+        {
+            time: "08:00 AM",
+            title: "Somatic Awakening",
+            desc: "Sunrise espresso on the Master Suite Balcony, watching the morning light catch the turquoise waves of Rendezvous Bay. The soft trade winds carry the fragrance of salt and wild frangipani.",
+            sync: "Auto-focusing: Upper Floor Balcony",
+            img: "https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTNlMWUwNC5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==",
+            floor: "second",
+            room: "balcony"
+        },
+        {
+            time: "11:00 AM",
+            title: "Powdery Sands",
+            desc: "A gentle five-minute stroll along the estate's private, manicured sand path down to Rendezvous Bay. Warm white sands meet crystal clear water for a swim before lunch.",
+            sync: "Auto-focusing: Beach Path / Travertine Terrace",
+            img: "https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTNhYzM4ZS5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==",
+            floor: "ground",
+            room: "poolterrace"
+        },
+        {
+            time: "02:00 PM",
+            title: "Pool Deck Sojourn",
+            desc: "Lazing on the poolside travertine terrace under shaded umbrellas, followed by a cooling dip in the heated infinity-edge pool, soaking in the endless sea view.",
+            sync: "Auto-focusing: Heated Infinity Pool",
+            img: "https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTQ0MWMwYi5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==",
+            floor: "ground",
+            room: "pool"
+        },
+        {
+            time: "05:00 PM",
+            title: "Sunset Fire-Pit Rituals",
+            desc: "Gathering in the screened outdoor porch for refreshing rum punches as the warm tropical breeze cools, watching St. Martin turn into gold in the distance.",
+            sync: "Auto-focusing: Screened Porch",
+            img: "https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJnNjlhYzQ2OS5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==",
+            floor: "ground",
+            room: "porch"
+        },
+        {
+            time: "08:00 PM",
+            title: "Epicurean Dining",
+            desc: "A custom multi-course gourmet dinner designed and prepared by our Michelin-trained chef, served inside the high-ceilinged teak kitchen and elegant dining salon.",
+            sync: "Auto-focusing: Teak Chef's Kitchen",
+            img: "https://d2ma42g52r8agz.cloudfront.net/eyJidWNrZXQiOiJsYWN1cmUtYmFja29mZmljZSIsImtleSI6InVwbG9hZHNcL2ltYWdlc1wvNjlhMjJjNTRkMDVlMi5qcGciLCJvcHRpb25zIjp7InByb2dyZXNzaXZlIjp0cnVlfSwiZm9ybWF0Ijoid2VicCIsImVkaXRzIjp7InJlc2l6ZSI6eyJoZWlnaHQiOm51bGwsIndpZHRoIjo4MDAsImZpdCI6ImNvdmVyIn19fQ==",
+            floor: "ground",
+            room: "kitchen"
+        }
+    ];
+
+    const data = timelineData[index];
+    if (!data) return;
+
+    const card = document.getElementById('timeline-card');
+    if (card) {
+        card.style.opacity = '0.4';
+        card.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            document.getElementById('timeline-card-time').innerText = data.time;
+            document.getElementById('timeline-card-title').innerText = data.title;
+            document.getElementById('timeline-card-desc').innerText = data.desc;
+            document.getElementById('timeline-card-sync').innerText = data.sync;
+            document.getElementById('timeline-card-img').style.backgroundImage = `url('${data.img}')`;
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 200);
+    }
+
+    triggerFloorPlanFocus(data.floor, data.room);
+};
+
+function triggerFloorPlanFocus(floorId, roomId) {
+    if (typeof window.switchFloor === 'function') {
+        window.switchFloor(floorId);
+    }
+    
+    setTimeout(() => {
+        const roomElement = document.querySelector(`.room-group[data-room="${roomId}"]`);
+        if (roomElement) {
+            selectRoom(roomId, roomElement);
+            
+            roomElement.classList.add('beacon-flash');
+            setTimeout(() => {
+                roomElement.classList.remove('beacon-flash');
+            }, 3000);
+            
+            const floorPlansSection = document.getElementById('floor-plans-section');
+            if (floorPlansSection) {
+                floorPlansSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+    }, 450);
+}
+
+// ==========================================================================
+// 18. Guestbook memoirs journal testimonial slider
+// ==========================================================================
+let currentJournalSlide = 0;
+let journalInterval = null;
+
+function initJournalSlider() {
+    startJournalAutoPlay();
+    
+    const container = document.querySelector('.journal-slider-container');
+    if (container) {
+        container.addEventListener('mouseenter', stopJournalAutoPlay);
+        container.addEventListener('mouseleave', startJournalAutoPlay);
+    }
+}
+
+function startJournalAutoPlay() {
+    stopJournalAutoPlay();
+    journalInterval = setInterval(() => {
+        window.nextJournalSlide();
+    }, 7000);
+}
+
+function stopJournalAutoPlay() {
+    if (journalInterval) {
+        clearInterval(journalInterval);
+        journalInterval = null;
+    }
+}
+
+window.setJournalSlide = function(index) {
+    const slides = document.querySelectorAll('.journal-slide');
+    const dots = document.querySelectorAll('.journal-dot');
+    
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    
+    currentJournalSlide = index;
+    
+    slides.forEach((slide, idx) => {
+        if (idx === index) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    
+    dots.forEach((dot, idx) => {
+        if (idx === index) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+};
+
+window.nextJournalSlide = function() {
+    window.setJournalSlide(currentJournalSlide + 1);
+};
+
+window.prevJournalSlide = function() {
+    window.setJournalSlide(currentJournalSlide - 1);
+};
+
+// ==========================================================================
+// 19. Curated Concierge Services Package click drawer link
+// ==========================================================================
+window.selectConciergePackage = function(packageName) {
+    if (typeof window.toggleDrawer === 'function') {
+        window.toggleDrawer(true);
+    }
+    
+    const chefCheck = document.getElementById('add-chef');
+    const yachtCheck = document.getElementById('add-yacht');
+    const jetCheck = document.getElementById('add-jet');
+    const staffCheck = document.getElementById('add-staff');
+    
+    if (chefCheck) chefCheck.checked = false;
+    if (yachtCheck) yachtCheck.checked = false;
+    if (jetCheck) jetCheck.checked = false;
+    if (staffCheck) staffCheck.checked = false;
+    
+    if (packageName.includes('Epicurean')) {
+        if (chefCheck) chefCheck.checked = true;
+    } else if (packageName.includes('Oceanic')) {
+        if (yachtCheck) yachtCheck.checked = true;
+    } else if (packageName.includes('Wellness') || packageName.includes('Sanctuary')) {
+        if (staffCheck) staffCheck.checked = true;
+    }
+};
+
+// ==========================================================================
+// 20. Logistical Travel FAQ Accordion dynamic height transition
+// ==========================================================================
+window.toggleFaq = function(index) {
+    const items = document.querySelectorAll('.faq-item');
+    
+    items.forEach((item, idx) => {
+        const content = item.querySelector('.faq-content');
+        
+        if (idx === index) {
+            const isActive = item.classList.contains('active');
+            if (isActive) {
+                item.classList.remove('active');
+                if (content) {
+                    content.style.maxHeight = null;
+                    content.style.paddingTop = null;
+                    content.style.paddingBottom = null;
+                }
+            } else {
+                item.classList.add('active');
+                if (content) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.paddingTop = '15px';
+                    content.style.paddingBottom = '15px';
+                }
+            }
+        } else {
+            item.classList.remove('active');
+            if (content) {
+                content.style.maxHeight = null;
+                content.style.paddingTop = null;
+                content.style.paddingBottom = null;
+            }
+        }
+    });
 };
